@@ -18,12 +18,15 @@ namespace traccine
         public MainPageViewModel mainPageViewModel;
         public App()
         {
+            InitializeComponent();
+         
             try
             {
-                InitializeComponent();
+
+
                 if (string.IsNullOrEmpty(Settings.User))
                 {
-                    MainPage = new MainPage(); ;
+                    MainPage = new Carousel();
 
                 }
                 else
@@ -32,7 +35,8 @@ namespace traccine
 
                 }
                 var manageview = MainPageViewModel.GetInstance;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }

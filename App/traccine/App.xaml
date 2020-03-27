@@ -3,6 +3,18 @@
     <Application.Resources>
         <Color x:Key="AppColor">#791AE5</Color>
         <Color x:Key="WhiteColor">White</Color>
+        <OnPlatform x:Key="font_extrabold" x:TypeArguments="x:String">
+            <On Platform="Android" Value="Montserrat-ExtraBold.ttf#Montserrat-ExtraBold" />
+            <On Platform="iOS" Value="Montserrat-ExtraBold" />
+        </OnPlatform>
+        <OnPlatform x:Key="font_bold" x:TypeArguments="x:String">
+            <On Platform="Android" Value="Montserrat-Bold.ttf#Montserrat-Bold" />
+            <On Platform="iOS" Value="Montserrat-Bold" />
+        </OnPlatform>
+        <OnPlatform x:Key="font_regular" x:TypeArguments="x:String">
+            <On Platform="Android" Value="Montserrat-Regular.ttf#Montserrat-Regular" />
+            <On Platform="iOS" Value="Montserrat-Regular" />
+        </OnPlatform>
         <Style TargetType="Button">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>

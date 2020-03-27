@@ -17,6 +17,7 @@
                    
                     <Label
                     FontAttributes="Bold"
+                         FontFamily="{StaticResource font_bold}" 
                     FontSize="25"
                     Text="{Binding AppName}"
                     TextColor="White"
@@ -43,8 +44,8 @@
                 <StackLayout Spacing="30">
                    
                     <Label
-                        
-                        FontSize="35"
+                         FontFamily="{StaticResource font_bold}" 
+                        FontSize="20"
                         HorizontalOptions="CenterAndExpand"
                         Text="Leading you to a safer and more healthier life"
                         TextColor="Gray"
@@ -53,8 +54,20 @@
 
                     </Label>
                     <StackLayout Spacing="10" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                        <Button TextColor="Blue" BorderColor="Black" BackgroundColor="WhiteSmoke" Text="sign in with google" Command="{Binding LoginCommand}">
-                        </Button>
+                        <Button BackgroundColor="#FFFFFF" 
+                                               
+                                                IsVisible="{Binding show}"
+                                                FontFamily="{StaticResource font_bold}" 
+                                                Padding="20,0" CornerRadius="20" 
+                                                TextColor="{StaticResource AppColor}" 
+                                                FontSize="16" 
+                                                BorderColor="{StaticResource AppColor}" 
+                                                BorderWidth="2" HeightRequest="50" 
+                                                Text="sign in with google"
+                                               Command="{Binding LoginCommand}"
+                                                HorizontalOptions="Center" />
+                       
+                      
                         <!--<yummy:PancakeView
                         BackgroundColor="#FF5A00"
                         BorderThickness="1"                       
@@ -105,18 +118,11 @@
                             WidthRequest="20" />
                         </yummy:PancakeView>-->
                     </StackLayout>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="*"/>
-                            
-                        </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Row="1"  Grid.Column="0" IsChecked="{Binding IsTermsAndConditionsAccepted}" WidthRequest="25" HeightRequest="35"  Color="BlueViolet"/>
+                    <Grid VerticalOptions="Center" >
+                       
+                        <CheckBox  IsChecked="{Binding IsTermsAndConditionsAccepted}"  HeightRequest="35"  Color="BlueViolet"/>
                         <Label
-                            Grid.Row="1" Grid.Column="1"
+                         
                         FontAttributes="None"
                        
                         FontSize="11"
@@ -133,19 +139,17 @@
                         </Label>
                     </Grid>
                     <Label
-                        FontAttributes="None"
-                       
+                         FontFamily="{StaticResource font_bold}" 
+                        FontAttributes="None"                       
                         FontSize="18"
                         HorizontalOptions="CenterAndExpand"
                         TextColor="#99A1B3"
                         HorizontalTextAlignment="Center"
-                        VerticalOptions="CenterAndExpand" >
-                        
+                        VerticalOptions="CenterAndExpand" >                        
                         <Label.FormattedText>
                             <FormattedString>
-                              
-                                <Span  Text="Powered By " ></Span>
-                                <Span  Text="{Binding PowerdBy} " ></Span>
+                                <Span  FontFamily="{StaticResource font_bold}"  Text="Powered By " ></Span>
+                                <Span  FontFamily="{StaticResource font_bold}"  Text="{Binding PowerdBy} " ></Span>
                                 <Span FontSize="Micro" Text="&#10; Wehelp@icuboid.com " ></Span>
                                 <Span  FontSize="Micro" Text="&#10; www.icuboid.com " ></Span>
                             </FormattedString>
