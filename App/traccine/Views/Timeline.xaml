@@ -29,7 +29,7 @@
             <ScrollView VerticalScrollBarVisibility="Never"
                         VerticalOptions="Start" 
                         HeightRequest="85"  
-                        Orientation ="Horizontal">
+                        Orientation ="Horizontal" x:Name="StatusScrollView">
                 <StackLayout x:Name="DaysBlock" 
                                  Orientation="Horizontal"
                                  HorizontalOptions="FillAndExpand"
@@ -38,7 +38,7 @@
             </ScrollView>
 
             <!-- Schedule-->
-            <StackLayout BackgroundColor="#f8f9fb">
+            <StackLayout BackgroundColor="#f8f9fb" >
                 <CollectionView ItemsSource="{Binding TimeLine}"                               
                                VerticalOptions="Start">
                     <CollectionView.ItemTemplate>

@@ -24,7 +24,14 @@ namespace traccine.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             var intent = new Intent(ApplicationContext, typeof(PeriodicService));
             var source = PendingIntent.GetBroadcast(ApplicationContext, 0, intent, 0);
-            StartService(intent);
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+            {
+               StartForegroundService(intent);
+            }
+            else
+            {
+               StartService(intent);
+            }
             //PeriodicService.EnqueueWork(ApplicationContext, new Intent());           
             PrintHashKey();
             base.OnCreate(savedInstanceState);

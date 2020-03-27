@@ -18,6 +18,8 @@ namespace traccine.Droid
         private BleServer _bleServer;
         private BleScannerService bleScannerService;
         private CancellationTokenSource _cts;
+        public const string PRIMARY_NOTIF_CHANNEL = "exampleChannel";
+        public const int SERVICE_RUNNING_NOTIFICATION_ID = 10000;
 
         //public static  int JOB_ID = 1;
 
@@ -47,6 +49,25 @@ namespace traccine.Droid
         //}
         public override StartCommandResult OnStartCommand(Android.Content.Intent intent, StartCommandFlags flags, int startId)
         {
+            if ((Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O))
+            {
+                var channel = new NotificationChannel(PRIMARY_NOTIF_CHANNEL, "Pedometer Service Channel", NotificationImportance.Low)
+                {
+                    Description = "Foreground Service Channel"
+                };
+
+                var notificationManager = (NotificationManager)GetSystemService(NotificationService);
+                notificationManager.CreateNotificationChannel(channel);
+
+                var notification = new Notification.Builder(this, PRIMARY_NOTIF_CHANNEL)
+                .SetContentTitle("Service")
+                .SetContentText("Running")
+                .SetSmallIcon(Android.Resource.Drawable.IcMenuToday)
+                //.SetContentIntent(BuildIntentToShowMainActivity())
+                .SetOngoing(true)
+                .Build();
+                StartForeground(SERVICE_RUNNING_NOTIFICATION_ID, notification);
+            }
             var t = new Java.Lang.Thread(() => {
                 _cts = new CancellationTokenSource();
 

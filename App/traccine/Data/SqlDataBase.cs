@@ -27,6 +27,29 @@ namespace traccine.Data
             return Ack;
 
         }
+
+        public async Task<int> UpdateTimeLineRecord(TimeLineModel data)
+        {
+            var Ack = await _database.UpdateAsync(data);
+
+            return Ack;
+
+        }
+
+        public async Task<TimeLineModel> GetIntreactionInfo(String Email)
+        {
+            var date = DateTime.Now;
+            var data = await _database.Table<TimeLineModel>()
+                              .OrderByDescending(x => x.DateTime)
+                              .ToListAsync();
+            var finaldata = data.Where(i => i.DateTime.Date == date.Date && i.Email== Email).FirstOrDefault();
+
+            return finaldata;
+
+
+
+        }
+
         public async Task<List<TimeLineModel>> GetEventsbyDate(DateTime FromDate, DateTime ToDate)
         {
 
