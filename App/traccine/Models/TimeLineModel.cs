@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -7,6 +8,8 @@ namespace traccine.Models
 {
     public class TimeLineModel : INotifyPropertyChanged
     {
+        [PrimaryKey, AutoIncrement]
+        public int id { get; set; }
         public string Time { get; set; }
         public DateTime DateTime { get; set; }
         public Uri Picture { get; set; }

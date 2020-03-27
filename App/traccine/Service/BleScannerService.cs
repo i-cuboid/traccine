@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using traccine.Helpers;
 using traccine.Models;
+using Xamarin.Forms;
 
 namespace traccine.Service
 {
@@ -17,6 +18,7 @@ namespace traccine.Service
     {
         private static readonly object Instancelock = new object();
         public FirbaseDataBaseHelper firebaseHelper { get; set; }
+        public Boolean NotifyUser { get; set; }
         public static BleScannerService _instance = null;
         public static BleScannerService GetInstance
         {
@@ -108,30 +110,48 @@ namespace traccine.Service
 
                             var person = await firebaseHelper.GetPersonByID(data);
                             var distance = getDistance(device.Rssi, -69);
-                            if (data != "" && person!=null && distance <= 2) { 
-                            TimeLineModel TimeLine = new TimeLineModel();
-                            TimeLine.Email = person.Email;
-                            TimeLine.Name = person.Name;
-                            TimeLine.Picture = person.Picture;
-                                if (person.IsInfected)
+                            if (data != "" && person!=null && distance <= 2) {
+                                NotifyUser = true;
+                               var Interacteduserinfo= await App.Database.GetIntreactionInfo(person.Email);
+                                if (Interacteduserinfo != null)
                                 {
-                                    TimeLine.TransportColor = "red";
-
+                                    Interacteduserinfo.DateTime = DateTime.UtcNow;
+                                    Interacteduserinfo.Distance = distance.ToString("0.00") + " M";
+                                    Interacteduserinfo.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
+                                    await App.Database.UpdateTimeLineRecord(Interacteduserinfo);
                                 }
                                 else
                                 {
-                                    TimeLine.TransportColor = "#76c2af";
+                                    TimeLineModel TimeLine = new TimeLineModel();
 
+                                    TimeLine.Email = person.Email;
+                                    TimeLine.Name = person.Name;
+                                    TimeLine.Picture = person.Picture;
+                                    if (person.IsInfected)
+                                    {
+                                        TimeLine.TransportColor = "red";
+
+                                    }
+                                    else
+                                    {
+                                        TimeLine.TransportColor = "#76c2af";
+
+                                    }
+                                    TimeLine.Distance = distance.ToString("0.00") + " M";
+                                    TimeLine.TransportType = "Walking";
+                                    TimeLine.DateTime = DateTime.UtcNow;
+                                    TimeLine.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
+                                    await App.Database.AddTimeLineRecord(TimeLine);
                                 }
-                                TimeLine.Distance = distance.ToString("0.00")+" M";
-                            TimeLine.TransportType = "Walking";
-                            TimeLine.DateTime = DateTime.UtcNow;
-                            TimeLine.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
-                             await App.Database.AddTimeLineRecord(TimeLine);
+                           
                             }
                         }
                         await adapter.DisconnectDeviceAsync(device);
-
+                        if (NotifyUser)
+                        {
+                            MessagingCenter.Send<BleScannerService, string>(this, "LiveEvent", "RecordsUpdtaed");
+                            NotifyUser = false;
+                        }
                     }
 
                 }
