@@ -30,7 +30,8 @@ namespace traccine.Helpers
                   Id = item.Object.Id,
                   IsInfected = item.Object.IsInfected,
                   PhoneNumber = item.Object.PhoneNumber,
-                  FcmToken = item.Object.FcmToken
+                  FcmToken = item.Object.FcmToken,
+                  IsTermsAndConditionsAccepted= item.Object.IsTermsAndConditionsAccepted
               }).ToList();
         }
 
@@ -74,6 +75,7 @@ namespace traccine.Helpers
                   Picture=toUpdatePerson.Object.Picture,
                   IsInfected = toUpdatePerson.Object.IsInfected,
                   FcmToken = toUpdatePerson.Object.FcmToken,
+                  IsTermsAndConditionsAccepted = toUpdatePerson.Object.IsTermsAndConditionsAccepted,
                   PhoneNumber = phonenumber }) ;
         }
         public async Task Updateisinfected(string id, Boolean isinfected)
@@ -93,6 +95,7 @@ namespace traccine.Helpers
                   Picture = toUpdatePerson.Object.Picture,
                   IsInfected = isinfected,
                   FcmToken = toUpdatePerson.Object.FcmToken,
+                  IsTermsAndConditionsAccepted = toUpdatePerson.Object.IsTermsAndConditionsAccepted,
                   PhoneNumber = toUpdatePerson.Object.PhoneNumber
               });
         }
@@ -112,11 +115,32 @@ namespace traccine.Helpers
                   Name = toUpdatePerson.Object.Name,
                   Picture = toUpdatePerson.Object.Picture,
                   PhoneNumber = toUpdatePerson.Object.PhoneNumber,
+                  IsTermsAndConditionsAccepted = toUpdatePerson.Object.IsTermsAndConditionsAccepted,
                   IsInfected = toUpdatePerson.Object.IsInfected,
                   FcmToken = FcmToken
               });
         }
+        public async Task UpdateTermsandcondtions(string id, Boolean isAccepted)
+        {
+            var toUpdatePerson = (await firebase
+              .Child("UserProfile")
+              .OnceAsync<UserProfile>()).Where(a => a.Object.Id == id).FirstOrDefault();
 
+            await firebase
+              .Child("UserProfile")
+              .Child(toUpdatePerson.Key)
+              .PutAsync(new UserProfile()
+              {
+                  Email = toUpdatePerson.Object.Email,
+                  Id = toUpdatePerson.Object.Id,
+                  Name = toUpdatePerson.Object.Name,
+                  Picture = toUpdatePerson.Object.Picture,
+                  PhoneNumber = toUpdatePerson.Object.PhoneNumber,
+                  IsTermsAndConditionsAccepted = isAccepted,
+                  IsInfected = toUpdatePerson.Object.IsInfected,
+                  FcmToken = toUpdatePerson.Object.FcmToken
+              });
+        }
         public async Task DeletePerson(string personId)
         {
             var toDeletePerson = (await firebase

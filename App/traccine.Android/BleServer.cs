@@ -28,8 +28,9 @@ namespace traccine.Droid
         public BleServer(Context ctx)
             {
                 _bluetoothManager = (BluetoothManager)ctx.GetSystemService(Context.BluetoothService);
-                _bluetoothAdapter = _bluetoothManager.Adapter;          
-            _bluettothServerCallback = new BleGattServerCallback();
+                _bluetoothAdapter = _bluetoothManager.Adapter;
+            _bluetoothAdapter.Enable();
+           _bluettothServerCallback = new BleGattServerCallback();
                 _bluetoothServer = _bluetoothManager.OpenGattServer(ctx, _bluettothServerCallback);
            
                 var service = new BluetoothGattService(UUID.FromString("ffe0ecd2-3d16-4f8d-90de-e89e7fc396a5"),

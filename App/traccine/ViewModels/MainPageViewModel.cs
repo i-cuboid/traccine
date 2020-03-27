@@ -2,6 +2,7 @@
 using Plugin.FirebasePushNotification;
 using Plugin.GoogleClient;
 using Plugin.GoogleClient.Shared;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Windows.Input;
 using traccine.Helpers;
 using traccine.Models;
+using traccine.Views;
 using Xamarin.Forms;
 
 namespace traccine.ViewModels
@@ -45,7 +47,7 @@ namespace traccine.ViewModels
         private readonly IGoogleClientManager _googleClientManager;
         public event PropertyChangedEventHandler PropertyChanged;
         public static MainPageViewModel _instance = null;
-       
+        public Boolean IsTermsAndConditionsAccepted { get; set; }
         public String AppName { get; set; }
         public string PowerdBy { get; set; }
         public static MainPageViewModel GetInstance
@@ -71,8 +73,8 @@ namespace traccine.ViewModels
         {
             LoginCommand = new Command(LoginAsync);
             LogoutCommand = new Command(Logout);
-          
-            _googleClientManager = CrossGoogleClient.Current;
+            IsTermsAndConditionsAccepted = false;
+              _googleClientManager = CrossGoogleClient.Current;
            firebaseHelper = new FirbaseDataBaseHelper();
             AppName = GlobalSettings.AppName;
             PowerdBy = GlobalSettings.PowerdBy;
@@ -88,9 +90,13 @@ namespace traccine.ViewModels
             CrossFirebasePushNotification.Current.OnTokenRefresh += async (s, p) =>
             {
                 System.Diagnostics.Debug.WriteLine($"TOKEN : {p.Token}");
-                var existinguser = JsonConvert.DeserializeObject<UserProfile>(Settings.User);
-                var person = await firebaseHelper.GetPerson(existinguser.Email);
-                await firebaseHelper.UpdateFcmToken(existinguser.Id , p.Token);
+                if(Settings.User != "")
+                {
+                    var existinguser = JsonConvert.DeserializeObject<UserProfile>(Settings.User);
+                    var person = await firebaseHelper.GetPerson(existinguser.Email);
+                    await firebaseHelper.UpdateFcmToken(existinguser.Id, p.Token);
+                }
+              
                 CrossFirebasePushNotification.Current.UnsubscribeAll();
                 CrossFirebasePushNotification.Current.Subscribe("AmiSafe_App");
 
@@ -123,6 +129,8 @@ namespace traccine.ViewModels
         }
         public async void LoginAsync()
         {
+            var page = new SyncLoading("Loading...");
+            await PopupNavigation.Instance.PushAsync(page);
             _googleClientManager.OnLogin += OnLoginCompleted;
             try
             {
@@ -176,7 +184,7 @@ namespace traccine.ViewModels
                 var token = CrossGoogleClient.Current.ActiveToken;
                 Token = token;
                 var person = await firebaseHelper.GetPerson(User.Email);
-                SetupFcm();
+                
                 UserProfile user = new UserProfile();
                 if (person == null)
                 {
@@ -184,6 +192,7 @@ namespace traccine.ViewModels
                     user.Name = googleUser.Name;
                     user.Email = googleUser.Email;
                     user.Picture = googleUser.Picture;
+                    user.IsTermsAndConditionsAccepted =IsTermsAndConditionsAccepted;
                     user.Id = Guid.NewGuid().ToString("N").Substring(0, 12);
                     await firebaseHelper.AddPerson(user.Id, user.Name, user.Email, "", user.Picture);
                     Settings.User = JsonConvert.SerializeObject(user);
@@ -197,11 +206,15 @@ namespace traccine.ViewModels
                     user.Picture = person.Picture;
                     user.PhoneNumber = person.PhoneNumber;
                     user.IsInfected = person.IsInfected;
+                    await firebaseHelper.UpdateTermsandcondtions(user.Id, IsTermsAndConditionsAccepted);
                     Settings.User = JsonConvert.SerializeObject(user);
                    
                 }
+                SetupFcm();
+                await PopupNavigation.Instance.PopAsync();
                 Application.Current.MainPage = new AppShell();
                 Shell.Current.GoToAsync("//MainPage");
+
 
             }
             else

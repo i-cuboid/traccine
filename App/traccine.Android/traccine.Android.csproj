@@ -61,6 +61,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie">
+      <Version>3.0.1</Version>
+    </PackageReference>
     <PackageReference Include="FirebaseDatabase.net">
       <Version>4.0.4</Version>
     </PackageReference>
@@ -81,6 +84,9 @@
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>3.2.6</Version>
+    </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>1.2.0.223</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.6.292</Version>
@@ -114,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
+    <AndroidAsset Include="Assets\loading.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

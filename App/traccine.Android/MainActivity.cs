@@ -10,6 +10,7 @@ using Plugin.GoogleClient;
 using Android.Content;
 using ImageCircle.Forms.Plugin.Droid;
 using Plugin.FirebasePushNotification;
+using Lottie.Forms.Droid;
 
 namespace traccine.Droid
 {
@@ -33,6 +34,9 @@ namespace traccine.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FirebasePushNotificationManager.ProcessIntent(this, Intent);
             ImageCircleRenderer.Init();
+            AnimationViewRenderer.Init();
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+          
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

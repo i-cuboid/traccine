@@ -14,6 +14,7 @@ namespace traccine.Models
         public string PhoneNumber { get; set; }
         public Boolean IsInfected { get; set; }       
         public string FcmToken { get; set; }
+        public Boolean IsTermsAndConditionsAccepted { get;set; }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

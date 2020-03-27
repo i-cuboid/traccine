@@ -13,16 +13,26 @@
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <StackLayout >
             <StackLayout  Margin="0,0,0,0"  Orientation="Horizontal">
-                <StackLayout Margin="20,10,20,0" Spacing="20">
+                <StackLayout Margin="0,50,0,50" Spacing="20"    HorizontalOptions="CenterAndExpand">
                    
                     <Label
                     FontAttributes="Bold"
-                    FontSize="20"
+                    FontSize="25"
                     Text="{Binding AppName}"
                     TextColor="White"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" />
+                    <Label
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    Text="Social Distance Detector"
+                    TextColor="White"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand" />
                 </StackLayout>
-                <Image Source="bgImage1" WidthRequest="170"  HorizontalOptions="EndAndExpand" />
+             
             </StackLayout>
             <yummy:PancakeView
             Margin="0,20,0,0"
@@ -31,76 +41,7 @@
             CornerRadius="40,40,0,0"
             VerticalOptions="FillAndExpand">
                 <StackLayout Spacing="30">
-                    <!--<StackLayout Spacing="20">
-                        <Label
-                        Margin="20,0,0,0"
-                        FontSize="20"
-                        Text="Email"
-                        TextColor="#99A1B3" />
-                        <yummy:PancakeView
-                        Padding="10,0,0,0"
-                        BackgroundColor="White"
-                        BorderThickness="1"
-                        CornerRadius="15"
-                        Elevation="3"
-                        HeightRequest="50">
-                            <renderers:BorderlessEntry
-                            FontSize="20"
-                            ClearButtonVisibility="WhileEditing"
-                            Keyboard="Email"
-                            TextColor="#484848" />
-                        </yummy:PancakeView>
-                    </StackLayout>
-                    <StackLayout Spacing="20">
-                        <Label
-                        Margin="20,0,0,0"
-                        FontSize="20"
-                        Text="Password"
-                        TextColor="#99A1B3" />
-                        <yummy:PancakeView
-                        Padding="10,0,0,0"
-                        BackgroundColor="White"
-                        BorderThickness="1"
-                        CornerRadius="15"
-                        Elevation="3"
-                        HeightRequest="50">
-                            <renderers:BorderlessEntry
-                            FontSize="25"
-                             ClearButtonVisibility="WhileEditing"
-                            IsPassword="True"
-                            TextColor="#484848" />
-                        </yummy:PancakeView>
-                    </StackLayout>
-                    <Label
-                    FontAttributes="None"
-                    FontSize="15"
-                    HorizontalOptions="EndAndExpand"
-                    Text="Forget Password?"
-                    TextColor="#99A1B3" />
-                    <yummy:PancakeView
-                    BackgroundColor="#791AE5"
-                    BorderThickness="1"
-                    CornerRadius="25"
-                    Elevation="3"
-                    HeightRequest="50"
-                    HorizontalOptions="CenterAndExpand"
-                    WidthRequest="150">
-                        <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="Login"
-                        TextColor="White"
-                        VerticalOptions="CenterAndExpand" >
-                           
-                        </Label>
-                    </yummy:PancakeView>
-                    <Label
-                    FontAttributes="None"
-                    FontSize="20"
-                    HorizontalOptions="CenterAndExpand"
-                    Text="Or"
-                    TextColor="#99A1B3" />-->
+                   
                     <Label
                         
                         FontSize="35"
@@ -164,22 +105,53 @@
                             WidthRequest="20" />
                         </yummy:PancakeView>-->
                     </StackLayout>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Row="1"  Grid.Column="0" IsChecked="{Binding IsTermsAndConditionsAccepted}" WidthRequest="25" HeightRequest="35"  Color="BlueViolet"/>
+                        <Label
+                            Grid.Row="1" Grid.Column="1"
+                        FontAttributes="None"
+                       
+                        FontSize="11"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="#99A1B3"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand" >
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontSize="Small" Text="I agree to the Terms Of Service and Privacy Policy" ></Span>
+                       
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
                     <Label
                         FontAttributes="None"
+                       
                         FontSize="18"
                         HorizontalOptions="CenterAndExpand"
                         TextColor="#99A1B3"
                         HorizontalTextAlignment="Center"
                         VerticalOptions="CenterAndExpand" >
+                        
                         <Label.FormattedText>
                             <FormattedString>
+                              
                                 <Span  Text="Powered By " ></Span>
                                 <Span  Text="{Binding PowerdBy} " ></Span>
-                                <Span FontSize="Micro" Text="&#10;" ></Span>
-                                <Span FontSize="Micro" Text="By continuning, you agree to the Terms Of Service &#10; Note:The iCuboid Privacy Policy Describes how data is handled in this service" ></Span>
+                                <Span FontSize="Micro" Text="&#10; Wehelp@icuboid.com " ></Span>
+                                <Span  FontSize="Micro" Text="&#10; www.icuboid.com " ></Span>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+                    
                 </StackLayout>
             </yummy:PancakeView>
         </StackLayout>

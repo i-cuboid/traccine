@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Windows.Input;
 using traccine.Helpers;
 using traccine.Models;
+using traccine.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -42,7 +44,9 @@ namespace traccine.ViewModels
 
         private async void UpdateCommandAsync(object obj)
         {
-             await firebaseHelper.UpdatePerson(User.Id, User.PhoneNumber);
+            var page = new SyncLoading("Updating...");
+            await PopupNavigation.Instance.PushAsync(page);
+            await firebaseHelper.UpdatePerson(User.Id, User.PhoneNumber);
             Settings.User = JsonConvert.SerializeObject(User);
             await firebaseHelper.Updateisinfected(User.Id, User.IsInfected);
             if (User.IsInfected)
@@ -58,6 +62,7 @@ namespace traccine.ViewModels
                     }
                 }
             }
+            await PopupNavigation.Instance.PopAsync();
         }
         public async void SahreCommand(object obj)
         {

@@ -14,10 +14,10 @@
                 <!-- Main image-->
                 <Image Source="dj" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,30,0,0"/>
                 <!-- Place name & travel date-->
-                <Label Margin="30,0,0,0">
+                <Label Margin="30,0,0,0" HorizontalTextAlignment="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="TimeLine &#10;" FontSize="28" FontAttributes="Bold" ForegroundColor="White" />
+                            <Span Text="Timeline &#10;" FontSize="28" FontAttributes="Bold" ForegroundColor="White" />
                             <Span Text="{Binding CurrentDate}" FontSize="17" ForegroundColor="White" />
                         </FormattedString>
                     </Label.FormattedText>

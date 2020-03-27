@@ -107,13 +107,23 @@ namespace traccine.Service
                             data = System.Text.Encoding.UTF8.GetString(bytes3);
 
                             var person = await firebaseHelper.GetPersonByID(data);
-                            if (data != "" ) { 
+                            var distance = getDistance(device.Rssi, -69);
+                            if (data != "" && person!=null && distance <= 2) { 
                             TimeLineModel TimeLine = new TimeLineModel();
                             TimeLine.Email = person.Email;
                             TimeLine.Name = person.Name;
                             TimeLine.Picture = person.Picture;
-                            TimeLine.TransportColor = "#76c2af";
-                            TimeLine.Distance = getDistance(device.Rssi,-69).ToString("0.00")+" M";
+                                if (person.IsInfected)
+                                {
+                                    TimeLine.TransportColor = "red";
+
+                                }
+                                else
+                                {
+                                    TimeLine.TransportColor = "#76c2af";
+
+                                }
+                                TimeLine.Distance = distance.ToString("0.00")+" M";
                             TimeLine.TransportType = "Walking";
                             TimeLine.DateTime = DateTime.UtcNow;
                             TimeLine.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
