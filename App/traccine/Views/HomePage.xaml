@@ -101,7 +101,7 @@
                 Grid.Row="1"
                 Margin="12, 12, 12, 0" >
 
-                <Grid HeightRequest="110">
+                <Grid HeightRequest="125">
                     <!--first Card-->
                     <Frame
                                 Style="{StaticResource FrameStyle}">
@@ -130,7 +130,7 @@
                             <Label
                                         Grid.Column="0"
                                         Grid.Row="1"
-                                        Text="You Met"
+                                        Text="Your Interaction"
                                         Style="{StaticResource NameStyle}"/>
                         </Grid>
                     </Frame>
@@ -168,7 +168,7 @@
                             <Label
                                         Grid.Column="0"
                                         Grid.Row="0"
-                                        Text="If you effected with corona send alert with whom you mat"
+                                        Text="If you effected with corona send alert with whom you met"
                                         Style="{StaticResource TierStyle}"/>
                             <Label
                                         Grid.Column="0"
