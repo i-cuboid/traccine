@@ -52,7 +52,7 @@
                                 </StackLayout>
                             </StackLayout>
                         </custom:PancakeView>
-                        <Image  Source="{Binding ImageSrc}" WidthRequest="300" VerticalOptions="EndAndExpand"  HorizontalOptions="EndAndExpand" HeightRequest="200" Margin="0,0,-10,200" />
+                        <Image  Source="{Binding ImageSrc}" WidthRequest="300" VerticalOptions="EndAndExpand"  HorizontalOptions="EndAndExpand" HeightRequest="200" Margin="0,0,-10,220" />
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>

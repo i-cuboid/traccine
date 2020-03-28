@@ -5,8 +5,11 @@ using Plugin.BLE.Abstractions.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 using traccine.Helpers;
 using traccine.Models;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace traccine.ViewModels
 {
@@ -22,6 +25,7 @@ namespace traccine.ViewModels
         public string _Message { get; set; }
         public int Interactions { get; set; }
         public int ActiveHours { get; set; }
+        public ICommand ShareCommand { get; set; }
         public int Places { get; set; }
         public int Score { get; set; }
         public String Username { get; set; }
@@ -46,6 +50,7 @@ namespace traccine.ViewModels
             Score = 0;
             ActiveHours = 0;
             Username = "";
+            ShareCommand = new Command(SahreCommand);
             Setup();
         }
 
@@ -79,7 +84,16 @@ namespace traccine.ViewModels
                 Message = "Good Night";
            }
         }
+        public async void SahreCommand(object obj)
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Uri = GlobalSettings.AppUrl,
+                Title = "Share AmiSafe",
+                Text = "Hey, I'm using AmiSafe App, To break the Corona Virus Chain. Please install this app and join with me. "
 
+            });
+        }
         public async void setupclient()
         {
             var ble = CrossBluetoothLE.Current;

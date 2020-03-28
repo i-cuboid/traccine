@@ -200,5 +200,19 @@
     <BundleResource Include="Resources\search%403x.png" />
     <BundleResource Include="Resources\twitter.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\iconfinder_avoid_touch_eyes_mouth_face_5964543.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\iconfinder_facial_mask_coronavirus_5964544.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\iconfinder_mobile_call_phone_5964548.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\iconfinder_Spreading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\iconfinder_wash_hands_regulary_5964550.png" />
+  </ItemGroup>
 </Project>
