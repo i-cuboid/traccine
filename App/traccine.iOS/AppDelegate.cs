@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Plugin.GoogleClient;
 using UIKit;
 
 namespace traccine.iOS
@@ -24,6 +25,7 @@ namespace traccine.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Rg.Plugins.Popup.Popup.Init();
+            GoogleClientManager.Initialize();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
