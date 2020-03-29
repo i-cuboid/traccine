@@ -25,9 +25,9 @@ namespace traccine
                 Items = new List<CarouselItem>()
                 {
                     // Just create some dummy data here for now.
-                    new CarouselItem{ Type="", ImageSrc="hands.png", Name = "Wash Hands",  Title = "Wash Hands", Margin="0,0,-10,200", Description="Clean hands with soap and water or alcohol-based hand rub", BackgroundColor= Color.FromHex("#791AE5"), StartColor=Color.FromHex("#f3463f"),  EndColor=Color.FromHex("#fece49") , show=false},
-                    new CarouselItem{ Type="", ImageSrc="sneezing.png", Name = "Cover Your Mouth", Margin="0,0,130,250", Title = "Use Tissue", Description="Cover nose and mouth when coughing and szeezing with tissue or flexed elbow",  BackgroundColor= Color.FromHex("#fab62a"), StartColor=Color.FromHex("#42a7ff"),  EndColor=Color.FromHex("#fab62a"),show=false},
-                    new CarouselItem{ Type="", ImageSrc="Avoid.png", Name = "Avoid Animals", Title = "Avoid", Margin="0,0,130,250", Description="Avoid touching your face", BackgroundColor= Color.FromHex("#425cfc"), StartColor=Color.FromHex("#33ccf3"),  EndColor=Color.FromHex("#ccee44"),show=true}
+                    new CarouselItem{ Type="", ImageSrc="iconfinder_wash_hands_regulary_5964550.png", Name = "Wash Hands",  Title = "Wash Hands", Margin="0,0,-10,200", Description="Clean hands with soap and water or alcohol-based hand rub", BackgroundColor= Color.FromHex("#791AE5"), StartColor=Color.FromHex("#f3463f"),  EndColor=Color.FromHex("#fece49") , show=false},
+                    new CarouselItem{ Type="", ImageSrc="iconfinder_facial_mask_coronavirus_5964544.png", Name = "Cover Your Mouth", Margin="0,0,130,250", Title = "Use Tissue", Description="Cover nose and mouth when coughing and szeezing with tissue or flexed elbow",  BackgroundColor= Color.FromHex("#fab62a"), StartColor=Color.FromHex("#42a7ff"),  EndColor=Color.FromHex("#fab62a"),show=false},
+                    new CarouselItem{ Type="", ImageSrc="iconfinder_avoid_touch_eyes_mouth_face_5964543.png", Name = "Avoid Animals", Title = "Avoid", Margin="0,0,130,250", Description="Avoid touching your face", BackgroundColor= Color.FromHex("#425cfc"), StartColor=Color.FromHex("#33ccf3"),  EndColor=Color.FromHex("#ccee44"),show=true}
                 }
             };
 
