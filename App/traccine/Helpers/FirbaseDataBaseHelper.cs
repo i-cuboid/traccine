@@ -12,10 +12,30 @@ namespace traccine.Helpers
     public class FirbaseDataBaseHelper
     {
        public FirebaseClient firebase { get; set; }
+
+        private static readonly object Instancelock = new object();
+        public static FirbaseDataBaseHelper _instance = null;
+        public static FirbaseDataBaseHelper GetInstance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (Instancelock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new FirbaseDataBaseHelper();
+                        }
+                    }
+
+                }
+                return _instance;
+            }
+        }
         public FirbaseDataBaseHelper()
         {
           firebase = new FirebaseClient("https://traccine.firebaseio.com/");
-
         }
         public async Task<List<UserProfile>> GetAllPersons()
         {

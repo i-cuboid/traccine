@@ -11,6 +11,7 @@ using traccine.Models;
 using traccine.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Notifications = traccine.Views.Notifications;
 
 namespace traccine
 {
@@ -27,6 +28,8 @@ namespace traccine
             Routing.RegisterRoute("ProfilePage", typeof(ProfilePage));
             Routing.RegisterRoute("HomePage", typeof(HomePage));
             Routing.RegisterRoute("TimelinePage", typeof(Timeline));
+            Routing.RegisterRoute("NotificationsPage", typeof(Notifications));
+            Routing.RegisterRoute("CoronaInsightsPage", typeof(CoronaInsightsPage));
         }
     }
 }

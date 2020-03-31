@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using traccine.Helpers;
 using traccine.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace traccine.Service
@@ -50,7 +52,7 @@ namespace traccine.Service
         public BleScannerService()
         {
             RunTask();
-          firebaseHelper = new FirbaseDataBaseHelper();
+          firebaseHelper = FirbaseDataBaseHelper.GetInstance;
         }
        public double getDistance(int rssi, int txPower)
         {
@@ -66,9 +68,9 @@ namespace traccine.Service
         private async void RunTask()
         {
             var ble = CrossBluetoothLE.Current;
-            
+         
             var adapter = CrossBluetoothLE.Current.Adapter;
-            
+           
             List<IDevice> deviceList = new List<IDevice>();
             adapter.DeviceDiscovered += (s, a) =>
             {
@@ -83,7 +85,10 @@ namespace traccine.Service
                
                 foreach (var device in deviceList.ToList())
                 {
-                    if (device.AdvertisementRecords.Count > 0)
+                    var manufacturedata = device.AdvertisementRecords.Where(x => x.Type == AdvertisementRecordType.ManufacturerSpecificData).FirstOrDefault();
+                    var manufactureinfo =Encoding.UTF8.GetString(manufacturedata.Data);
+                    string my_String = Regex.Replace(manufactureinfo, @"[^0-9a-zA-Z]+", "");
+                    if (my_String == "Ami")
                     {
                         try
                         {
@@ -106,11 +111,46 @@ namespace traccine.Service
                             {
                                 continue;
                             }
-                            data = System.Text.Encoding.UTF8.GetString(bytes3);
+                            data =Encoding.UTF8.GetString(bytes3);
 
                             var person = await firebaseHelper.GetPersonByID(data);
                             var distance = getDistance(device.Rssi, -69);
                             if (data != "" && person!=null && distance <= 2) {
+                                var location = await Geolocation.GetLastKnownLocationAsync();
+                                Placemark placemark = null;
+                                if (location != null)
+                                {
+                                    var Latitude = 0.01 ;
+                                    var Longitude = 0.01;
+                                    if (location.IsFromMockProvider)
+                                    {
+                                        //Put a message if detect a mock location.
+                                    }
+                                    else
+                                    {
+                                        Latitude = location.Latitude;
+                                        Longitude = location.Longitude;
+                                    }
+                                    var placemarks = await Geocoding.GetPlacemarksAsync(Latitude, Longitude);
+
+                                    placemark = placemarks?.FirstOrDefault();
+                                    if (placemark != null)
+                                    {
+                                        var geocodeAddress =
+                                            $"AdminArea:       {placemark.AdminArea}\n" +
+                                            $"CountryCode:     {placemark.CountryCode}\n" +
+                                            $"CountryName:     {placemark.CountryName}\n" +
+                                            $"FeatureName:     {placemark.FeatureName}\n" +
+                                            $"Locality:        {placemark.Locality}\n" +
+                                            $"PostalCode:      {placemark.PostalCode}\n" +
+                                            $"SubAdminArea:    {placemark.SubAdminArea}\n" +
+                                            $"SubLocality:     {placemark.SubLocality}\n" +
+                                            $"SubThoroughfare: {placemark.SubThoroughfare}\n" +
+                                            $"Thoroughfare:    {placemark.Thoroughfare}\n";
+
+                                        Console.WriteLine(geocodeAddress);
+                                    }
+                                }
                                 NotifyUser = true;
                                var Interacteduserinfo= await App.Database.GetIntreactionInfo(person.Email);
                                 if (Interacteduserinfo != null)
@@ -118,7 +158,11 @@ namespace traccine.Service
                                     Interacteduserinfo.DateTime = DateTime.UtcNow;
                                     Interacteduserinfo.Distance = distance.ToString("0.00") + " M";
                                     Interacteduserinfo.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
+                                    Interacteduserinfo.Adress1 = placemark.SubLocality + " , "  + placemark.Locality + " , " + placemark.SubAdminArea;
+                                    Interacteduserinfo.Adress2 = placemark.AdminArea + " , " + placemark.CountryName + " , " + placemark.PostalCode;
                                     await App.Database.UpdateTimeLineRecord(Interacteduserinfo);
+                                    MessagingCenter.Send<BleScannerService, string>(this, "RecordDetected", "RecordsUpdtaed");
+
                                 }
                                 else
                                 {
@@ -141,7 +185,12 @@ namespace traccine.Service
                                     TimeLine.TransportType = "Walking";
                                     TimeLine.DateTime = DateTime.UtcNow;
                                     TimeLine.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
+                                    TimeLine.Adress1 = placemark.SubLocality + " , " + placemark.Locality + " , " + placemark.SubAdminArea;
+                                    TimeLine.Adress2 = placemark.AdminArea + " , " + placemark.CountryName + " , " + placemark.PostalCode;
+
+
                                     await App.Database.AddTimeLineRecord(TimeLine);
+                                    MessagingCenter.Send<BleScannerService, string>(this, "RecordDetected", "RecordsUpdtaed");
                                 }
                            
                             }
@@ -156,7 +205,7 @@ namespace traccine.Service
 
                 }
                 deviceList.Clear();
-                Thread.Sleep(10000); 
+                Thread.Sleep(GlobalSettings.DeviceReadTimeInMilliseconds); 
 
             }
 

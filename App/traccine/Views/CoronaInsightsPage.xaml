@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="traccine.Views.CoronaInsightsPage"
+             Title="Corona Cases">
+    <ContentPage.Resources>
+
+        <Style x:Key="NoDataFound" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HeightRequest" Value="300"/>
+        </Style>
+
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+
+          
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <ListView x:Name="sitenotifications"
+                 
+                  ItemsSource="{Binding CoronaDetails}"
+                  VerticalOptions="FillAndExpand"
+                  HasUnevenRows="True"
+                  BackgroundColor="Transparent"                   
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="0" Spacing="0" Margin="3,0,3,0">
+                                <Frame>
+                                    <StackLayout Padding="2" Spacing="0">
+                                        <Grid Grid.Row="0" Grid.Column="0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="1*"/>
+                                                    <ColumnDefinition  Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Row="0" Grid.Column="0">
+                                                    <Image Source="{Binding pic}" 
+                                                               HeightRequest="30" WidthRequest="30" Grid.Column="0"
+                                                               HorizontalOptions="Start"/>
+                                                </Grid >
+                                                <Grid Grid.Row="0" Grid.Column="1">
+                                                    <Label Grid.Row="0" Text="{Binding country}" LineBreakMode="WordWrap" WidthRequest="200" FontSize="16" FontAttributes="Bold" TextColor="#111" HorizontalOptions="Start"/>
+                                                </Grid>
+                                                <Grid Grid.Row="0" Grid.Column="1" >
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="auto"/>
+                                                            <RowDefinition Height="auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="1*"/>
+                                                            <ColumnDefinition Width="9*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <Label Grid.Row="0"   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="Total :" FontSize="12"  />
+                                                                        <Span Text="{Binding cases}" FontSize="12" FontAttributes="Bold"  />
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Grid.Column="0" >
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Row="0" Grid.Column="1">
+                                                    <Label Grid.Row="0"  >
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="deaths :" FontSize="12"  />
+                                                                <Span Text="{Binding deaths}" FontSize="12" FontAttributes="Bold"  />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </Grid>
+                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                    <Label Grid.Row="0"  >
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="recover :" FontSize="12"  />
+                                                                <Span Text="{Binding recovered}" FontSize="12" FontAttributes="Bold"  />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </Grid>
+                                                <Grid Grid.Row="0" Grid.Column="3">
+                                                    <Label Grid.Row="0"  >
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="active :" FontSize="12"  />
+                                                                <Span Text="{Binding active}" FontSize="12" FontAttributes="Bold"  />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

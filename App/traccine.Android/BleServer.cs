@@ -11,26 +11,29 @@ using Random = System.Random;
 using Newtonsoft.Json;
 using traccine.Models;
 using traccine.Helpers;
+using traccine.Droid;
+using System.Threading.Tasks;
+
 
 namespace traccine.Droid
 {
     
 
-        public class BleServer
-        {
+        public class BleServer 
+    {
             private readonly BluetoothManager _bluetoothManager;
             private BluetoothAdapter _bluetoothAdapter;
             private BleGattServerCallback _bluettothServerCallback;
             private BluetoothGattServer _bluetoothServer;
             private BluetoothGattCharacteristic _characteristic;
-       
 
+       
         public BleServer(Context ctx)
             {
                 _bluetoothManager = (BluetoothManager)ctx.GetSystemService(Context.BluetoothService);
                 _bluetoothAdapter = _bluetoothManager.Adapter;
             _bluetoothAdapter.Enable();
-           _bluettothServerCallback = new BleGattServerCallback();
+            _bluettothServerCallback = new BleGattServerCallback();
                 _bluetoothServer = _bluetoothManager.OpenGattServer(ctx, _bluettothServerCallback);
            
                 var service = new BluetoothGattService(UUID.FromString("ffe0ecd2-3d16-4f8d-90de-e89e7fc396a5"),
@@ -59,7 +62,7 @@ namespace traccine.Droid
                 builder.SetTxPowerLevel(AdvertiseTx.PowerHigh);
                 AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
                 dataBuilder.SetIncludeDeviceName(true);
-                byte[] bytes = Encoding.ASCII.GetBytes("jp");
+                byte[] bytes = Encoding.ASCII.GetBytes("Ami");
                 dataBuilder.AddManufacturerData(1984, bytes);
                 dataBuilder.SetIncludeTxPowerLevel(true);
 
@@ -143,12 +146,8 @@ namespace traccine.Droid
 
         }
 
-
-
-
-
-
-        }
+        
+    }
 
         public class BleAdvertiseCallback : AdvertiseCallback
         {

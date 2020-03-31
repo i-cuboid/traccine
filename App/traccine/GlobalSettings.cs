@@ -7,7 +7,8 @@ namespace traccine
     public class GlobalSettings
     {
         public const string AppName = "AmiSafe";
-        public const string AppUrl = "https://play.google.com/store/apps/details?id=com.companyname.Dyocense";
+        public const int DeviceReadTimeInMilliseconds = 10000;
+        public const string AppUrl = "https://play.google.com/store/apps/details?id=com.icuboid.traccine";
         public const string PowerdBy = "iCuboid";
         public const string FireBaseURl = "https://fcm.googleapis.com/fcm/send";
         public const string FcmSenderId = "215032580074";

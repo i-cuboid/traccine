@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:abstractions="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              mc:Ignorable="d"
              x:Class="traccine.Views.Timeline"
              Title="TimeLine">
@@ -46,7 +47,7 @@
                             <StackLayout Orientation="Horizontal" Padding="30,10">
 
                                 <!-- Time-->
-                                <Label Text="{Binding Time}" FontAttributes="Bold" FontSize="18"/>
+                                <Label Text="{Binding Time}" FontAttributes="Bold" FontSize="15"/>
 
                                 <!-- Travel indicator-->
                                 <StackLayout Orientation="Vertical">
@@ -55,13 +56,13 @@
                                 </StackLayout>
 
                                 <!-- Place to go-->
-                                <Image Source="{Binding Picture}" HeightRequest="80" WidthRequest="90" VerticalOptions="Start" />
+                                <abstractions:CircleImage Source="{Binding Picture}" HeightRequest="50" WidthRequest="50" VerticalOptions="Start" />
 
                                 <!-- Place description-->
-                                <StackLayout>
-                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
-                                    <Label Text="{Binding Distance}" FontSize="15" TextColor="Silver"/>
-                                    <Label Text="{Binding Adress2}" FontSize="15" TextColor="Silver"/>
+                                <StackLayout >
+                                    <Label Text="{Binding Name}" HorizontalTextAlignment="End" FontAttributes="Bold" FontSize="16" />
+                                    <Label Text="{Binding Distance}"  HorizontalTextAlignment="End" FontSize="12" TextColor="Silver"/>
+                                    <Label Text="{Binding Adress1}"  HorizontalTextAlignment="End" FontSize="12" TextColor="Silver"/>
                                 </StackLayout>
 
                             </StackLayout>

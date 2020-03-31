@@ -2,12 +2,15 @@
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.Exceptions;
+using Plugin.FirebasePushNotification;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Windows.Input;
 using traccine.Helpers;
 using traccine.Models;
+using traccine.Service;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -26,7 +29,12 @@ namespace traccine.ViewModels
         public int Interactions { get; set; }
         public int ActiveHours { get; set; }
         public ICommand ShareCommand { get; set; }
-        public int Places { get; set; }
+        public ICommand GoToTimeLinePageCommand { get; set; }
+        public ICommand GoToProfilePageCommand { get; set; }
+        public ICommand NotificationsNavigateCommand { get; set; }
+        public ICommand GoToInsightsPageCommand { get; set; }
+        public int Cases { get; set; }
+        public FirbaseDataBaseHelper firebaseHelper { get; set; }
         public int Score { get; set; }
         public String Username { get; set; }
         public string Message
@@ -43,18 +51,80 @@ namespace traccine.ViewModels
         }
         public HomePageViewModel()
         {
-            //setupclient();
+           
             Message = "";
-            Places = 0;
+            Cases = 0;
             Interactions = 0;
             Score = 0;
             ActiveHours = 0;
             Username = "";
+            GoToInsightsPageCommand = new Command(GoToInsightsPage);
             ShareCommand = new Command(SahreCommand);
-            Setup();
+            GoToTimeLinePageCommand = new Command(GoToTimeLinePage);
+            GoToProfilePageCommand = new Command(GoToProfilePage);
+            NotificationsNavigateCommand = new Command(GoToNotificationsPage);
+             firebaseHelper = FirbaseDataBaseHelper.GetInstance;
+            if (Settings.User != "")
+            {
+                SetupFcm();
+            }
         }
 
-        private async void Setup()
+        private async void GoToInsightsPage(object obj)
+        {
+            await Shell.Current.GoToAsync("CoronaInsightsPage");
+        }
+
+        private async void GoToNotificationsPage(object obj)
+        {
+            await Shell.Current.GoToAsync("NotificationsPage");
+        }
+
+        public async void SetupFcm()
+        {
+            CrossFirebasePushNotification.Current.OnTokenRefresh += async (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"TOKEN : {p.Token}");
+                if (Settings.User != "")
+                {
+                    var existinguser = JsonConvert.DeserializeObject<UserProfile>(Settings.User);
+                    var person = await firebaseHelper.GetPerson(existinguser.Email);
+                    await firebaseHelper.UpdateFcmToken(existinguser.Id, p.Token);
+                }
+
+                CrossFirebasePushNotification.Current.UnsubscribeAll();
+                CrossFirebasePushNotification.Current.Subscribe("AmiSafe_App");
+
+
+
+                var topis = CrossFirebasePushNotification.Current.SubscribedTopics;
+
+            };
+            CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+            {
+
+                System.Diagnostics.Debug.WriteLine("Received");
+
+            };
+            CrossFirebasePushNotification.Current.OnNotificationOpened += async (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Opened");
+                await Shell.Current.GoToAsync("TimelinePage");
+              
+
+            };
+        }
+        private async void GoToProfilePage(object obj)
+        {
+            await Shell.Current.GoToAsync("ProfilePage");
+        }
+
+        private async void GoToTimeLinePage(object obj)
+        {
+           await Shell.Current.GoToAsync("TimelinePage");
+        }
+
+        public async void Setup()
         {
             Username = JsonConvert.DeserializeObject<UserProfile>(Settings.User).Name;
             ActiveHours= await App.Database.GetActiveHours();
@@ -83,6 +153,27 @@ namespace traccine.ViewModels
             {
                 Message = "Good Night";
            }
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://corona.lmao.ninja/all"))
+            {
+               
+               
+
+                using (var httpClient = new HttpClient())
+                {
+                    var result = await httpClient.SendAsync(httpRequest);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var test = await result.Content.ReadAsStringAsync();
+                        Cases = JsonConvert.DeserializeObject<CoronaCases>(test).cases;
+                    }
+                    else
+                    {
+                        // Use result.StatusCode to handle failure
+                        // Your custom error handler here
+                    }
+                }
+            }
         }
         public async void SahreCommand(object obj)
         {
@@ -94,42 +185,22 @@ namespace traccine.ViewModels
 
             });
         }
-        public async void setupclient()
+
+        #region Live Feed
+        public void HandleLiveEvent()
         {
-            var ble = CrossBluetoothLE.Current;
-            var adapter = CrossBluetoothLE.Current.Adapter;
-           
-            List<IDevice> deviceList = new List<IDevice> ();
-            adapter.DeviceDiscovered += (s, a) => deviceList.Add(a.Device);
-            await adapter.StartScanningForDevicesAsync();
-            foreach(var device in deviceList)
-            {
-                if(device.AdvertisementRecords.Count > 3 )
-                {
-                    var data = device.AdvertisementRecords[2].ToString();
-                    try
-                    {
-                        await adapter.ConnectToDeviceAsync(device);
-                    }
-                    catch (DeviceConnectionException e)
-                    {
-                        continue;
-                    }
-                    var service = await device.GetServiceAsync(Guid.Parse("ffe0ecd2-3d16-4f8d-90de-e89e7fc396a5"));
-                    if (service != null)
-                    {
-                        var characteristic = await service.GetCharacteristicAsync(Guid.Parse("d8de624e-140f-4a22-8594-e2216b84a5f2"));
-                        var bytes = await characteristic.ReadAsync();
-                        string result = System.Text.Encoding.UTF8.GetString(bytes);
-                        Message = result;
-                    }
-                   
+            MessagingCenter.Subscribe<BleScannerService, string>(this, "RecordDetected", (sender, args) => {
 
-                }
+                Setup();
 
-            }
-           
+
+
+            });
         }
-      
+        #endregion
+        public void Unsubscribelive()
+        {
+            MessagingCenter.Unsubscribe<BleScannerService, string>(this, "RecordDetected");
+        }
     }
 }

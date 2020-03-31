@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="traccine.Views.Notifications"
+             Title="Notifications">
+    <ContentPage.Resources>       
+
+        <Style x:Key="NoDataFound" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HeightRequest" Value="300"/>
+        </Style>
+
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout IsVisible="{Binding NoNotificationsFound}"  HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Label Text=" No Notifications yet!" Style="{StaticResource NoDataFound}" />
+            </StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <ListView x:Name="sitenotifications"
+                  IsVisible="{Binding NotificationsFound}"
+                  ItemsSource="{Binding Notifications}"
+                  VerticalOptions="FillAndExpand"
+                  HasUnevenRows="True"
+                  BackgroundColor="Transparent"                   
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="0" Spacing="0" Margin="3,0,3,0">
+                                <Frame>
+                                    <StackLayout Padding="2" Spacing="0">
+                                        <Grid Grid.Row="0" Grid.Column="0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="1*"/>
+                                                    <ColumnDefinition  Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Row="0" Grid.Column="0">
+                                                    <Image Source="alarm" 
+                                                               HeightRequest="30" WidthRequest="30" Grid.Column="0"
+                                                               HorizontalOptions="Start"/>
+                                                </Grid >
+                                                <Grid Grid.Row="0" Grid.Column="1">
+                                                    <Label Grid.Row="0" Text="{Binding Title}" LineBreakMode="WordWrap" WidthRequest="200" FontSize="16" FontAttributes="Bold" TextColor="#111" HorizontalOptions="Start"/>
+                                                </Grid>
+                                                <Grid Grid.Row="0" Grid.Column="1" >
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="1*"/>
+                                                            <ColumnDefinition Width="9*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <Label Grid.Row="0" Text="{Binding Time}"  FontSize="10" FontAttributes="Bold"   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Grid.Column="0" >
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Row="0" Grid.Column="1">
+                                                    <Label Grid.Row="0" Text="{Binding Body}" FontSize="12" FontAttributes="Bold"  HorizontalOptions="StartAndExpand"/>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Padding="15" BackgroundColor="{DynamicResource AppColor}" VerticalOptions="End" >
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding ClearNotificationCommand}"/>
+                </StackLayout.GestureRecognizers>
+                <Label Text="Clear All Notifictions " VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

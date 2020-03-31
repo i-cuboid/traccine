@@ -9,6 +9,7 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V4.App;
 using traccine.Service;
+using Xamarin.Forms;
 
 namespace traccine.Droid
 {
@@ -99,41 +100,50 @@ namespace traccine.Droid
                 bleScannerService = BleScannerService.GetInstance;
             //    while (true)
             //{
-            //    using (var notificationManager = NotificationManager.FromContext(ApplicationContext))
-            //    {
-            //        var title = "Title";
-            //        var channelName = "TestChannel";
-            //        if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
-            //        {
-            //            NotificationChannel channel = null;
-            //            if (channel == null)
-            //            {
-            //                channel = new NotificationChannel(channelName, channelName, NotificationImportance.Low)
-            //                {
-            //                    LockscreenVisibility = NotificationVisibility.Public
-            //                };
-            //                channel.SetShowBadge(true);
-            //                notificationManager.CreateNotificationChannel(channel);
-            //            }
-            //            channel.Dispose();
-            //        }
-            //        // var bitMap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.notification_template_icon_bg);
-            //        var notificationBuilder = new NotificationCompat.Builder(ApplicationContext)
-            //                                                                .SetContentTitle(title)
-            //                                                                .SetContentText("test")
-            //                                                                .SetSmallIcon(Android.Resource.Drawable.IcDialogInfo)
-            //                                                                .SetShowWhen(false)
-            //                                                                .SetChannelId(channelName);
-
-            //        var notification = notificationBuilder.Build();
-            //        notificationManager.Notify(0, notification);
-            //    }
-                Thread.Sleep(60000);
+            //                  Thread.Sleep(60000);
             
             });
+            HandleLiveEvent();
             return StartCommandResult.Sticky;
         }
+        public void HandleLiveEvent()
+        {
+            MessagingCenter.Subscribe<BleScannerService, string>(this, "RecordDetected", (sender, args) => {
 
+
+                using (var notificationManager = NotificationManager.FromContext(ApplicationContext))
+                {
+                    var title = "RecordDetected";
+                    var channelName = "RecordDetected";
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                    {
+                        NotificationChannel channel = null;
+                        if (channel == null)
+                        {
+                            channel = new NotificationChannel(channelName, channelName, NotificationImportance.Low)
+                            {
+                                LockscreenVisibility = NotificationVisibility.Public
+                            };
+                            channel.SetShowBadge(true);
+                            notificationManager.CreateNotificationChannel(channel);
+                        }
+                        channel.Dispose();
+                    }
+                    // var bitMap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.notification_template_icon_bg);
+                    var notificationBuilder = new NotificationCompat.Builder(this, channelName)
+                                                                            .SetContentTitle(title)
+                                                                            .SetContentText("RecordDetected")
+                                                                            .SetSmallIcon(Android.Resource.Drawable.IcDialogInfo)
+                                                                            .SetShowWhen(false)
+                                                                            .SetChannelId(channelName);
+
+                    var notification = notificationBuilder.Build();
+                    notificationManager.Notify(0, notification);
+                }
+
+
+            });
+        }
         protected override void OnHandleIntent(Intent intent)
         {
             //_bleServer = new BleServer(this.ApplicationContext);

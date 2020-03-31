@@ -17,6 +17,7 @@ namespace traccine.Data
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<TimeLineModel>().Wait();
+            _database.CreateTableAsync<Notifications>().Wait();
 
         }
 
@@ -27,7 +28,28 @@ namespace traccine.Data
             return Ack;
 
         }
+        public async Task<int> AddNotification(Notifications data)
+        {
+            var Ack = await _database.InsertAsync(data);
 
+            return Ack;
+
+        }
+        public async Task<List<Notifications>> GetNotifications()
+        {
+            var Ack = await _database.Table<Notifications>()
+                              .OrderByDescending(x => x.Time)
+                              .ToListAsync();
+            return Ack;
+
+        }
+        public async Task<int> RemoveNotification()
+        {
+            var Ack = await _database.DeleteAllAsync<Notifications>();
+
+            return Ack;
+
+        }
         public async Task<int> UpdateTimeLineRecord(TimeLineModel data)
         {
             var Ack = await _database.UpdateAsync(data);

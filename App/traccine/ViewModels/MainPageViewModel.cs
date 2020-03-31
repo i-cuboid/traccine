@@ -75,58 +75,14 @@ namespace traccine.ViewModels
             LogoutCommand = new Command(Logout);
             IsTermsAndConditionsAccepted = false;
               _googleClientManager = CrossGoogleClient.Current;
-           firebaseHelper = new FirbaseDataBaseHelper();
+           firebaseHelper = FirbaseDataBaseHelper.GetInstance;
             AppName = GlobalSettings.AppName;
             PowerdBy = GlobalSettings.PowerdBy;
             IsLoggedIn = false;
            
-            if(Settings.User != "")
-            {
-                SetupFcm();
-            }
+           
         }
-        public async void SetupFcm()
-        {
-            CrossFirebasePushNotification.Current.OnTokenRefresh += async (s, p) =>
-            {
-                System.Diagnostics.Debug.WriteLine($"TOKEN : {p.Token}");
-                if(Settings.User != "")
-                {
-                    var existinguser = JsonConvert.DeserializeObject<UserProfile>(Settings.User);
-                    var person = await firebaseHelper.GetPerson(existinguser.Email);
-                    await firebaseHelper.UpdateFcmToken(existinguser.Id, p.Token);
-                }
-              
-                CrossFirebasePushNotification.Current.UnsubscribeAll();
-                CrossFirebasePushNotification.Current.Subscribe("AmiSafe_App");
-
-
-
-                var topis = CrossFirebasePushNotification.Current.SubscribedTopics;
-
-            };
-            CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
-            {
-
-                System.Diagnostics.Debug.WriteLine("Received");
-
-            };
-            CrossFirebasePushNotification.Current.OnNotificationOpened += async (s, p) =>
-            {
-                System.Diagnostics.Debug.WriteLine("Opened");
-
-                foreach (var data in p.Data)
-                {
-
-                    // await service.GetSites();
-
-
-                    System.Diagnostics.Debug.WriteLine($"{data.Key} : {data.Value}");
-
-                }
-
-            };
-        }
+    
         public async void LoginAsync()
         {
             var page = new SyncLoading("Loading...");
@@ -210,7 +166,6 @@ namespace traccine.ViewModels
                     Settings.User = JsonConvert.SerializeObject(user);
                    
                 }
-                SetupFcm();
                 await PopupNavigation.Instance.PopAsync();
                 Application.Current.MainPage = new AppShell();
                 Shell.Current.GoToAsync("//MainPage");

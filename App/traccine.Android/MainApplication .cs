@@ -7,9 +7,11 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Plugin.FirebasePushNotification;
+using traccine.Models;
 
 namespace traccine.Droid
 {
@@ -39,7 +41,7 @@ namespace traccine.Droid
 #if DEBUG
             FirebasePushNotificationManager.Initialize(this, true);
 #else
-              FirebasePushNotificationManager.Initialize(this,false);
+              FirebasePushNotificationManager.Initialize(this,true);
 #endif
 
             //Handle notification when app is closed here
@@ -69,18 +71,45 @@ namespace traccine.Droid
                     // channel on older versions of Android.
                     return;
                 }
-                var channel = new NotificationChannel("FCM_Notifications", "FCM Notifications", NotificationImportance.Default)
+                using (var notificationManager = NotificationManager.FromContext(ApplicationContext))
                 {
-                   
-                    Description = Body,
-                    Name = Notification,
-                };
+                    var title = Notification;
+                    var channelName = "FCM_PUSHNOTIFICATIONS";
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                    {
+                        NotificationChannel channel = null;
+                        if (channel == null)
+                        {
+                            channel = new NotificationChannel(channelName, channelName, NotificationImportance.Low)
+                            {
+                                LockscreenVisibility = NotificationVisibility.Public
+                            };
+                            channel.SetShowBadge(true);
+                            notificationManager.CreateNotificationChannel(channel);
+                        }
+                        channel.Dispose();
+                    }
+                    Notifications _notifcation = new Notifications();
+                    _notifcation.Body = Body;
+                    _notifcation.Title = title;
+                    _notifcation.Time = DateTime.UtcNow;
+                    App.Database.AddNotification(_notifcation);
+                    // var bitMap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.notification_template_icon_bg);
+                    var notificationBuilder = new NotificationCompat.Builder(this, channelName)
+                                                                            .SetContentTitle(title)
+                                                                            .SetContentText(Body)
+                                                                            .SetSmallIcon(Android.Resource.Drawable.IcDialogInfo)
+                                                                            .SetShowWhen(false)
+                                                                            .SetChannelId(channelName);
 
-                var notificationManager = (NotificationManager)GetSystemService(NotificationService);
-                notificationManager.CreateNotificationChannel(channel);
+                    var notification = notificationBuilder.Build();
+                    notificationManager.Notify(0, notification);
+                }
+
             };
 
-
         }
+
+      
     }
 }

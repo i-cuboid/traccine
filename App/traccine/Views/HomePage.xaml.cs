@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using traccine.Helpers;
 using traccine.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,11 +15,35 @@ namespace traccine.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
+        public IBluetoothConnector _BluetoothConnector;
+        public HomePageViewModel VM { get; }
+        public bool IsLiveInitiated { get; set; }
         public HomePage()
         {
             InitializeComponent();
-            BindingContext = new HomePageViewModel();
-            CheckUserPermissions();
+            BindingContext = VM= new HomePageViewModel();
+            _BluetoothConnector = DependencyService.Get<IBluetoothConnector>();           
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (VM != null)
+            {
+                CheckUserPermissions();
+                VM.Setup();
+                VM.HandleLiveEvent();
+                IsLiveInitiated = true;
+            }
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (IsLiveInitiated)
+            {
+                VM.Unsubscribelive();
+                IsLiveInitiated = false;
+            }
         }
         public async void CheckUserPermissions()
         {
@@ -64,6 +89,15 @@ namespace traccine.Views
                 else if (Storagestatus != PermissionStatus.Unknown)
                 {
                     await DisplayAlert("Storage Denied", "Can not continue, try again.", "OK");
+                }
+
+                if (!await _BluetoothConnector.GetBluetoothStatus())
+                {
+                    bool answer = await DisplayAlert("", "AmiSafe wants to turn on bluetooth", "Yes", "No");
+                    if (answer)
+                    {
+                        await _BluetoothConnector.EnableBluetooth(true);
+                    }
                 }
             }
             catch (Exception ex)

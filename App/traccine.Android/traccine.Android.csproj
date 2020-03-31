@@ -90,7 +90,7 @@
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.5.1</Version>
+      <Version>1.5.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Xamarin.Forms.PancakeView">
@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="BleGattServerCallback.cs" />
     <Compile Include="BleServer.cs" />
+    <Compile Include="BluetoothConnector.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication .cs" />
     <Compile Include="PeriodicService .cs" />
@@ -286,6 +287,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\iconfinder_Spreading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\alarm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Bell.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
