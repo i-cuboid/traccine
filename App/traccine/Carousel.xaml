@@ -31,6 +31,8 @@
                                             <Label FontFamily="{StaticResource font_bold}"  Text="{Binding Name}" TextColor="#FFFFFF" Margin="24,24,24,0" FontSize="16" FontAttributes="Bold" LineBreakMode="NoWrap" />
                                             <Label FontFamily="{StaticResource font_regular}"  Text="{Binding Description}" TextColor="#FFFFFF" Margin="24,8,24,24" FontSize="12" LineBreakMode="WordWrap" />
                                         </StackLayout>
+                                        <Image  Source="{Binding ImageSrc}" WidthRequest="200" VerticalOptions="Center"  HorizontalOptions="Center" HeightRequest="150" Margin="0,20,0,0"/>
+
                                     </Grid>
                                 </custom:PancakeView>
                                 <StackLayout BackgroundColor="#FFFFFF" VerticalOptions="FillAndExpand" Margin="0,-32,0,32">
@@ -52,7 +54,6 @@
                                 </StackLayout>
                             </StackLayout>
                         </custom:PancakeView>
-                        <Image  Source="{Binding ImageSrc}" WidthRequest="300" VerticalOptions="EndAndExpand"  HorizontalOptions="EndAndExpand" HeightRequest="200" Margin="0,0,-10,220" />
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
