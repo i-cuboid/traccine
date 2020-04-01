@@ -30,6 +30,7 @@ namespace traccine
             Routing.RegisterRoute("TimelinePage", typeof(Timeline));
             Routing.RegisterRoute("NotificationsPage", typeof(Notifications));
             Routing.RegisterRoute("CoronaInsightsPage", typeof(CoronaInsightsPage));
+            Routing.RegisterRoute("SponsorPage", typeof(SponsorPage));
         }
     }
 }

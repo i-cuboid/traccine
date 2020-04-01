@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Sponsors"
+             x:Class="traccine.Views.SponsorPage">
+    <ContentPage.Content>
+        <StackLayout Padding="30">
+            <StackLayout Orientation="Vertical" HeightRequest="200">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="iCuboidUrl"/>
+                </StackLayout.GestureRecognizers>
+                <Image Source="finalicuboidlogo1.png" Aspect="AspectFit" WidthRequest="300"/>
+                <!--<Label Text="iCuboid"/>-->
+            </StackLayout>
+            <StackLayout HeightRequest="200">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CyclonerakeUlr"/>
+                </StackLayout.GestureRecognizers>
+                <Image Source="cyclonerake.png"  Aspect="AspectFit"  />
+                <!--<Label Text="Cyclonerake"/>-->
+            </StackLayout>
+            <StackLayout HeightRequest="200">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="DyocenseUrl"/>
+                </StackLayout.GestureRecognizers>
+                <Image Source="dyocense.png"  Aspect="AspectFit"  Margin="0,0,0,0"/>
+                <!--<Label Text="Dyocense"/>-->
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

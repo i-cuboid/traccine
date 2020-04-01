@@ -6,32 +6,28 @@
              xmlns:abstractions="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              mc:Ignorable="d"
              x:Class="traccine.Renderers.FlyoutHeader" HeightRequest="170">
-    <Grid BackgroundColor="#791AE5">
-       
-            <Button Command="{Binding LogoutCommand}"
-           Text="SignOut"              
-                HeightRequest="40"
-                    BackgroundColor="White"
-                 Margin="5"
-                    HorizontalOptions="EndAndExpand"             
-               VerticalOptions="StartAndExpand"
-               />
-     
-        
-       
+    <StackLayout  BackgroundColor="#791AE5" >
+        <StackLayout Orientation="Horizontal" Padding="10">
+            <abstractions:CircleImage  Aspect="AspectFill" 
+                   Source="{Binding Picture}"
+                   HorizontalOptions="Center"
+                   HeightRequest="80"
+                   WidthRequest="80"                   
+                   VerticalOptions="Center"
+                  />
+            <Label Text="{Binding Email}" 
+                   TextColor="White" 
+                   FontAttributes="Bold" 
+                   Margin="10"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="Center" />
 
-        <abstractions:CircleImage  Aspect="AspectFill" 
-               Source="{Binding Picture}"
-               HorizontalOptions="Start"
-               Margin="5"
-               VerticalOptions="End"
-              />
-        <Label Text="{Binding Email}" 
-               TextColor="White" 
-               FontAttributes="Bold" 
-               Margin="10"
-               HorizontalTextAlignment="Start"
-               VerticalTextAlignment="End" />
-        
-    </Grid>
+        </StackLayout>
+        <StackLayout BackgroundColor="#b777ff" VerticalOptions="EndAndExpand" Padding="0,10,0,10" Margin="0,0,0,0">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding LogoutCommand}"></TapGestureRecognizer>
+            </StackLayout.GestureRecognizers>
+            <Label Text="SignOut" TextColor="White" FontSize="Default" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+        </StackLayout>
+    </StackLayout>
 </ContentView>
