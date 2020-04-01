@@ -41,7 +41,10 @@
         <ShellContent Title="My Profle"
                     Icon="profile"
                     ContentTemplate="{DataTemplate local:ProfilePage}" />
-        
+        <ShellContent Title="Sponsors"
+                    Icon="baseline_supervisor_account_black_18dp"
+                    ContentTemplate="{DataTemplate local:SponsorPage}" />
+
     </FlyoutItem>
 
     <ShellItem Route="Login">
