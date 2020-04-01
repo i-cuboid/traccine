@@ -159,7 +159,7 @@ namespace traccine.ViewModels
                     var _interactedUser = await firebaseHelper.GetPerson(user);
                     if (_interactedUser.FcmToken != "")
                     {
-                        await messageHelper.NotifyAsync(_interactedUser.FcmToken, "AmiSafe detected a perosn with COVID-19 Symptoms ", User.Name + " is Reported COVID-19 Symptoms ");
+                        await messageHelper.NotifyAsync(_interactedUser.FcmToken, "AmiSafe detected a person with COVID-19 Symptoms ", User.Name + " is Reported COVID-19 Symptoms ");
                     }
                 }
             }

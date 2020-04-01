@@ -29,29 +29,55 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView >
+        
         <StackLayout Orientation="Vertical"  >
+            <Grid Margin="10" Padding="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                   
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                   
+                </Grid.ColumnDefinitions>
+                <Label FontFamily="{StaticResource font_bold}" FontSize="Medium" Grid.Row="0" Grid.Column="0" Text="Diagnosed Positive for Covid-19"/>
+                <Switch  Grid.Row="0" Grid.Column="1" IsToggled="{Binding User.IsInfected}" OnColor="Gray"
+                                  Toggled="OnDiagnosedSwitchToogled"
+                                 ThumbColor="BlueViolet"   Margin="0,0,5,0"
+                                    HorizontalOptions="EndAndExpand"
+                                    VerticalOptions="Center"
+                                    WidthRequest="60">
+                   
+                </Switch>
+            </Grid>
             <ListView  x:Name="QuestionsListView"  ItemsSource="{Binding Questions}"
                          HasUnevenRows="True"                                       
                          IsVisible="{Binding showSymptomsquestions}"  
                          CachingStrategy="RecycleElement"
-                         SeparatorVisibility="Default"                            
+                         SeparatorVisibility="Default"   
+                         BackgroundColor="Transparent"                      
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" Padding="10" Margin="10">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label  FontSize="Medium" TextColor="Green" Margin="0,20,0,0"/>
-                                        <Label Text="{Binding Ques}" MaxLines="5" FontSize="Small" TextColor="#474747" Margin="0,20,0,5">
-                                        </Label>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal" Margin="10,0,10,0" HorizontalOptions="FillAndExpand" >
-                                        <Picker Title="Select answer" ItemsSource="{Binding Answers}" ItemDisplayBinding="{Binding Text}"  HorizontalOptions="FillAndExpand" FontSize="Small" TextColor="Gray" SelectedItem="{Binding SelectItem,Mode=TwoWay}">
-                                        </Picker>
-                                    </StackLayout>
+                                <Frame Padding="5" Margin="5">
+                                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" >
+                                  
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label  FontSize="Medium" TextColor="Green" Margin="0,20,0,0"/>
+                                            <Label  FontFamily="{StaticResource font_regular}" Text="{Binding Ques}" MaxLines="5" FontSize="Small" TextColor="#474747" Margin="0,20,0,5">
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" >
+                                            <Picker Title="Select answer" ItemsSource="{Binding Answers}" ItemDisplayBinding="{Binding Text}"  HorizontalOptions="FillAndExpand" FontSize="Small" TextColor="Gray" SelectedItem="{Binding SelectItem,Mode=TwoWay}">
+                                            </Picker>
+                                        </StackLayout>
+                                   
                                 </StackLayout>
+                                </Frame>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
@@ -105,6 +131,35 @@
                 <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="Small but important steps can slow the spread of COVID-19. Avoid groups of people and keep six feet apart from anyone who's not part of the household. Especially avoid those showing symptoms." />
 
                
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding User.IsInfected}"  >
+               
+                <Label   Style="{StaticResource NameStyle}"                                  
+                                    FontSize="16"
+                                    Text="Isolate From Others" />
+                <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="You should try to stay away from others for at least 7 days from when your symptoms first appeared. Your isolation can end if your symptoms improve significantly and if you have had no fever for at least 72 hours without the use of medicine. By isolating yourself, you can slow the spread of COVID-19 and protect others." />
+
+                <Label   Style="{StaticResource NameStyle}"                                  
+                                    FontSize="16"
+                                    Text="Rest and Take Care" />
+                <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="Eat well, drink fluids, and get plenty of rest." />
+
+                <Label   Style="{StaticResource NameStyle}"                                  
+                                    FontSize="16"
+                                    Text="Monitor Symptoms" />
+                <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="Watch for COVID-19 symptoms such as cough, fever, and difficulty breathing. Also, check your temperature twice a day for two weeks. If symptoms get worse, call your doctor." />
+                <Label   Style="{StaticResource NameStyle}"                                  
+                                    FontSize="16"
+                                    Text="Break The Chain" />
+                <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="Notify others and Break the Chain." />
+                <StackLayout Padding="15" BackgroundColor="{DynamicResource AppColor}" VerticalOptions="End" >
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer  Command="{Binding ClearNotificationCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Notify Others" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+
+                </StackLayout>
             </StackLayout>
         </StackLayout>
       

@@ -59,7 +59,7 @@
                                                                HorizontalOptions="Start"/>
                                                 </Grid >
                                                 <Grid Grid.Row="0" Grid.Column="1">
-                                                    <Label Grid.Row="0" Text="{Binding country}" LineBreakMode="WordWrap" WidthRequest="200" FontSize="16" FontAttributes="Bold" TextColor="#111" HorizontalOptions="Start"/>
+                                                    <Label Grid.Row="0" Text="{Binding country}"  FontFamily="{StaticResource font_regular}" LineBreakMode="WordWrap" WidthRequest="200" FontSize="16" FontAttributes="Bold" TextColor="#111" HorizontalOptions="Start"/>
                                                 </Grid>
                                                 <Grid Grid.Row="0" Grid.Column="1" >
                                                     <Grid>
@@ -72,7 +72,7 @@
                                                             <ColumnDefinition Width="9*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Grid Grid.Row="0" Grid.Column="1">
-                                                            <Label Grid.Row="0"   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center">
+                                                            <Label Grid.Row="0"   HorizontalOptions="EndAndExpand" VerticalTextAlignment="Center"  FontFamily="{StaticResource font_regular}">
                                                                 <Label.FormattedText>
                                                                     <FormattedString>
                                                                         <Span Text="Total :" FontSize="12"  />
@@ -100,7 +100,7 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <Grid Grid.Row="0" Grid.Column="1">
-                                                    <Label Grid.Row="0"  >
+                                                    <Label Grid.Row="0"  FontFamily="{StaticResource font_regular}" >
                                                         <Label.FormattedText>
                                                             <FormattedString>
                                                                 <Span Text="deaths :" FontSize="12"  />
@@ -110,7 +110,7 @@
                                                     </Label>
                                                 </Grid>
                                                 <Grid Grid.Row="0" Grid.Column="2">
-                                                    <Label Grid.Row="0"  >
+                                                    <Label Grid.Row="0"   FontFamily="{StaticResource font_regular}">
                                                         <Label.FormattedText>
                                                             <FormattedString>
                                                                 <Span Text="recover :" FontSize="12"  />

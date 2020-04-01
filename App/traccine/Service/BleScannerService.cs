@@ -134,28 +134,13 @@ namespace traccine.Service
                                     var placemarks = await Geocoding.GetPlacemarksAsync(Latitude, Longitude);
 
                                     placemark = placemarks?.FirstOrDefault();
-                                    if (placemark != null)
-                                    {
-                                        var geocodeAddress =
-                                            $"AdminArea:       {placemark.AdminArea}\n" +
-                                            $"CountryCode:     {placemark.CountryCode}\n" +
-                                            $"CountryName:     {placemark.CountryName}\n" +
-                                            $"FeatureName:     {placemark.FeatureName}\n" +
-                                            $"Locality:        {placemark.Locality}\n" +
-                                            $"PostalCode:      {placemark.PostalCode}\n" +
-                                            $"SubAdminArea:    {placemark.SubAdminArea}\n" +
-                                            $"SubLocality:     {placemark.SubLocality}\n" +
-                                            $"SubThoroughfare: {placemark.SubThoroughfare}\n" +
-                                            $"Thoroughfare:    {placemark.Thoroughfare}\n";
-
-                                        Console.WriteLine(geocodeAddress);
-                                    }
+                                   
                                 }
                                 NotifyUser = true;
                                var Interacteduserinfo= await App.Database.GetIntreactionInfo(person.Email);
                                 if (Interacteduserinfo != null)
                                 {
-                                    Interacteduserinfo.DateTime = DateTime.UtcNow;
+                                    Interacteduserinfo.DateTime = DateTime.Now;
                                     Interacteduserinfo.Distance = distance.ToString("0.00") + " M";
                                     Interacteduserinfo.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
                                     Interacteduserinfo.Adress1 = placemark.SubLocality + " , "  + placemark.Locality + " , " + placemark.SubAdminArea;
@@ -183,7 +168,7 @@ namespace traccine.Service
                                     }
                                     TimeLine.Distance = distance.ToString("0.00") + " M";
                                     TimeLine.TransportType = "Walking";
-                                    TimeLine.DateTime = DateTime.UtcNow;
+                                    TimeLine.DateTime = DateTime.Now;
                                     TimeLine.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
                                     TimeLine.Adress1 = placemark.SubLocality + " , " + placemark.Locality + " , " + placemark.SubAdminArea;
                                     TimeLine.Adress2 = placemark.AdminArea + " , " + placemark.CountryName + " , " + placemark.PostalCode;
