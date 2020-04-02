@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using traccine.Helpers;
 using traccine.Models;
@@ -9,7 +11,7 @@ using Xamarin.Forms;
 
 namespace traccine
 {
-    public partial class Carousel : ContentPage
+    public partial class Carousel : ContentPage, INotifyPropertyChanged
     {
         private List<Color> _backgroundColors = new List<Color>();
 
