@@ -55,7 +55,7 @@
                     </Label>
                     <StackLayout Spacing="10" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                         <Button BackgroundColor="#FFFFFF" 
-                                               
+                                               IsEnabled="{Binding IsTermsAndConditionsAccepted}"
                                                 IsVisible="{Binding show}"
                                                 FontFamily="{StaticResource font_bold}" 
                                                 Padding="20,0" CornerRadius="20" 
@@ -64,10 +64,9 @@
                                                 BorderColor="{StaticResource AppColor}" 
                                                 BorderWidth="2" HeightRequest="50" 
                                                 Text="sign in with google"
-                                               Command="{Binding LoginCommand}"
+                                                Command="{Binding LoginCommand}"
                                                 HorizontalOptions="Center" />
-                       
-                      
+                   
                         <!--<yummy:PancakeView
                         BackgroundColor="#FF5A00"
                         BorderThickness="1"                       
@@ -118,11 +117,9 @@
                             WidthRequest="20" />
                         </yummy:PancakeView>-->
                     </StackLayout>
-                    <Grid VerticalOptions="Center" >
-                       
+                    <!--<Grid VerticalOptions="Center" >                       
                         <CheckBox  IsChecked="{Binding IsTermsAndConditionsAccepted}"  HeightRequest="35"  Color="BlueViolet"/>
                         <Label
-                         
                         FontAttributes="None"
                        
                         FontSize="11"
@@ -134,6 +131,31 @@
                                 <FormattedString>
                                     <Span FontSize="Small" Text="I agree to the Terms Of Service and Privacy Policy" ></Span>
                        
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>-->
+                    <Grid VerticalOptions="Center" >
+
+                        <Label
+                         
+                        FontAttributes="None"
+                       
+                        FontSize="11"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="#99A1B3"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand" >
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontSize="Small" Text="Please accept the " ></Span>
+                                    <Span FontSize="Small" TextColor="Blue" Text="Terms and Conditions " >
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OpenTermsCommand}"></TapGestureRecognizer>
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                    <Span FontSize="Small" Text="to enable login button " ></Span>
+
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>

@@ -36,6 +36,7 @@ namespace traccine.ViewModels
             get => User.Picture;
             set => User.Picture = value;
         }
+        public string AppNmae { get; set; }
 
         public bool IsLoggedIn { get; set; }
         public FirbaseDataBaseHelper firebaseHelper { get; set; }
@@ -44,6 +45,7 @@ namespace traccine.ViewModels
         private static readonly object Instancelock = new object();
         public ICommand LoginCommand { get; set; }
         public ICommand LogoutCommand { get; set; }
+        public ICommand OpenTermsCommand { get; set; }
         private readonly IGoogleClientManager _googleClientManager;
         public event PropertyChangedEventHandler PropertyChanged;
         public static MainPageViewModel _instance = null;
@@ -72,7 +74,10 @@ namespace traccine.ViewModels
         public MainPageViewModel()
         {
             LoginCommand = new Command(LoginAsync);
+            AppNmae = GlobalSettings.AppName;
             LogoutCommand = new Command(Logout);
+            OpenTermsCommand = new Command(GoToTerms);
+
             IsTermsAndConditionsAccepted = false;
               _googleClientManager = CrossGoogleClient.Current;
            firebaseHelper = FirbaseDataBaseHelper.GetInstance;
@@ -82,7 +87,10 @@ namespace traccine.ViewModels
            
            
         }
-    
+       public  void GoToTerms()
+        {            
+            PopupNavigation.Instance.PushAsync(new TermsAndConditions());
+        }
         public async void LoginAsync()
         {
             var page = new SyncLoading("Loading...");
@@ -116,7 +124,7 @@ namespace traccine.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert("Error", e.Message, "OK");
             }
-
+            PopupNavigation.Instance.PopAsync();
         }
 
 
