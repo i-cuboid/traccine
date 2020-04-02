@@ -49,7 +49,7 @@ namespace traccine.ViewModels
         #region Live Feed
         public void HandleLiveEvent()
         {
-            MessagingCenter.Subscribe<BleScannerService, string>(this, "LiveEvent", (sender, args) => {
+            MessagingCenter.Subscribe<BleScannerService, string>(this, "RecordDetected", (sender, args) => {
 
 
               if(CurrentDay == DateTime.Now.Day)

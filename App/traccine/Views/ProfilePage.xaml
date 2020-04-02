@@ -153,9 +153,9 @@
                                     FontSize="16"
                                     Text="Break The Chain" />
                 <Label  Style="{StaticResource ValueStyle}" FontAttributes="Italic"  FontSize="14" Text="Notify others and Break the Chain." />
-                <StackLayout Padding="15" BackgroundColor="{DynamicResource AppColor}" VerticalOptions="End" >
+                <StackLayout Padding="15"  BackgroundColor="{DynamicResource AppColor}" VerticalOptions="EndAndExpand" >
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer  Command="{Binding ClearNotificationCommand}"/>
+                        <TapGestureRecognizer  Command="{Binding NotifyOthersCommand}"/>
                     </StackLayout.GestureRecognizers>
                     <Label Text="Notify Others" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
 

@@ -64,6 +64,9 @@ namespace traccine.Droid
                     System.Diagnostics.Debug.WriteLine($"{data.Key} : {data.Value}");
 
                 }
+
+
+
                 if (Build.VERSION.SdkInt < BuildVersionCodes.O)
                 {
                     // Notification channels are new in API 26 (and not a part of the
@@ -95,7 +98,7 @@ namespace traccine.Droid
                     _notifcation.Time = DateTime.UtcNow;
                     App.Database.AddNotification(_notifcation);
                     // var bitMap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.notification_template_icon_bg);
-                    var notificationBuilder = new NotificationCompat.Builder(this, channelName)
+                    var notificationBuilder = new Notification.Builder(this, channelName)
                                                                             .SetContentTitle(title)
                                                                             .SetContentText(Body)
                                                                             .SetSmallIcon(Android.Resource.Drawable.IcDialogInfo)

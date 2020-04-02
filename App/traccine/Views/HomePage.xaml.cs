@@ -67,7 +67,7 @@ namespace traccine.Views
                 }
                 else if (locationstatus != PermissionStatus.Unknown)
                 {
-                    await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
+                 //   await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
                 }
 
                 var Storagestatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
@@ -88,7 +88,7 @@ namespace traccine.Views
                 }
                 else if (Storagestatus != PermissionStatus.Unknown)
                 {
-                    await DisplayAlert("Storage Denied", "Can not continue, try again.", "OK");
+                   // await DisplayAlert("Storage Denied", "Can not continue, try again.", "OK");
                 }
 
                 if (!await _BluetoothConnector.GetBluetoothStatus())

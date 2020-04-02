@@ -32,7 +32,7 @@ namespace traccine.Droid
             {
                 _bluetoothManager = (BluetoothManager)ctx.GetSystemService(Context.BluetoothService);
                 _bluetoothAdapter = _bluetoothManager.Adapter;
-            _bluetoothAdapter.Enable();
+           // _bluetoothAdapter.Enable();
             _bluettothServerCallback = new BleGattServerCallback();
                 _bluetoothServer = _bluetoothManager.OpenGattServer(ctx, _bluettothServerCallback);
            

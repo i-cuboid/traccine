@@ -61,11 +61,12 @@ namespace traccine.Droid
                 notificationManager.CreateNotificationChannel(channel);
 
                 var notification = new Notification.Builder(this, PRIMARY_NOTIF_CHANNEL)
-                .SetContentTitle("Service")
+                .SetContentTitle(GlobalSettings.AppName)
                 .SetContentText("Running")
-                .SetSmallIcon(Android.Resource.Drawable.IcMenuToday)
+                .SetAutoCancel(false)
+                .SetSmallIcon(Android.Resource.Drawable.IcNotificationOverlay)
                 //.SetContentIntent(BuildIntentToShowMainActivity())
-                .SetOngoing(true)
+                //.SetOngoing(false)                
                 .Build();
                 StartForeground(SERVICE_RUNNING_NOTIFICATION_ID, notification);
             }
@@ -103,7 +104,7 @@ namespace traccine.Droid
             //                  Thread.Sleep(60000);
             
             });
-            HandleLiveEvent();
+           // HandleLiveEvent();
             return StartCommandResult.Sticky;
         }
         public void HandleLiveEvent()

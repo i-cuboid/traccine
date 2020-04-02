@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using traccine.Helpers;
 using traccine.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +16,7 @@ namespace traccine.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage ,INotifyPropertyChanged
     {
-       
+        public IBluetoothConnector _BluetoothConnector;
         public MainPage()
         {
            
@@ -26,7 +27,7 @@ namespace traccine.Views
             Shell.SetFlyoutBehavior(this, 0);
             NavigationPage.SetHasBackButton(this, false);
             SetValue(NavigationPage.HasNavigationBarProperty, false);
-          
+            _BluetoothConnector = DependencyService.Get<IBluetoothConnector>();
             InitializeComponent();
            
           
@@ -40,7 +41,7 @@ namespace traccine.Views
                 {
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                     {
-                        await DisplayAlert("Need location", "App needs location", "OK");
+                       // await DisplayAlert("Need location", "App needs location", "OK");
                     }
 
                     var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
@@ -53,7 +54,7 @@ namespace traccine.Views
                 }
                 else if (locationstatus != PermissionStatus.Unknown)
                 {
-                    await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
+                    //await DisplayAlert("Location Denied", "Can not continue, try again.", "OK");
                 }
 
                 var Storagestatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
@@ -61,7 +62,7 @@ namespace traccine.Views
                 {
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
                     {
-                        await DisplayAlert("Need Storage", "App needs Storage", "OK");
+                        //await DisplayAlert("Need Storage", "App needs Storage", "OK");
                     }
 
                     var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
@@ -74,7 +75,15 @@ namespace traccine.Views
                 }
                 else if (Storagestatus != PermissionStatus.Unknown)
                 {
-                    await DisplayAlert("Storage Denied", "Can not continue, try again.", "OK");
+                    //await DisplayAlert("Storage Denied", "Can not continue, try again.", "OK");
+                }
+                if (!await _BluetoothConnector.GetBluetoothStatus())
+                {
+                    bool answer = await DisplayAlert("", "AmiSafe wants to turn on bluetooth", "Yes", "No");
+                    if (answer)
+                    {
+                        await _BluetoothConnector.EnableBluetooth(true);
+                    }
                 }
             }
             catch (Exception ex)

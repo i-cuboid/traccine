@@ -19,6 +19,8 @@ namespace traccine.ViewModels
         public UserProfile User { get; set; }
         public FirbaseDataBaseHelper firebaseHelper { get; set; }
         public ICommand UpdateCommand { get; set; }
+
+        public ICommand NotifyOthersCommand { get; set; }
         public int TotalActiveHours { get; set; }
         public int TotalScore { get; set; }
         public int TotalInteractions { get; set; }
@@ -35,6 +37,7 @@ namespace traccine.ViewModels
             Questionlist = new List<string>() { "Are you Suffering with Fever ?", "Are you experiencing any symptoms like 'Dry Cough', 'Sore throat' , 'Weakness' and 'Difficulty in Breathing' ?", "In the last 14 days, have you traveled internationally ?", "In the last 14 days, have you been in an area where COVID-19 is widespread?", "Do you live or work in a care facility?" };
             Answers = new List<Symptomsoptions>() { new Symptomsoptions { Text = "Yes" }, new Symptomsoptions { Text = "No" } };
             UpdateCommand = new Command(UpdateCommandAsync);
+            NotifyOthersCommand = new Command(NotifyOthersAction);
             User = JsonConvert.DeserializeObject<UserProfile>(Settings.User);
             firebaseHelper = FirbaseDataBaseHelper.GetInstance;
             messageHelper = new FcmMessageHelper();
@@ -48,6 +51,30 @@ namespace traccine.ViewModels
             setup();
             Questions = new ObservableCollection<SymptomsQuestions>();
             PrepareQuestions();
+        }
+
+        private async void NotifyOthersAction(object obj)
+        {
+            var page1 = new SyncLoading("Notifiying to community...");
+            await PopupNavigation.Instance.PushAsync(page1);
+            await firebaseHelper.Updateisinfected(User.Id, User.IsInfected);
+            if (User.IsInfected)
+            {
+              
+                Settings.User = JsonConvert.SerializeObject(User);
+                var users = await App.Database.GetTotalInteractedEmails();
+
+                foreach (var user in users)
+                {
+                    var _interactedUser = await firebaseHelper.GetPerson(user);
+                    if (_interactedUser.FcmToken != "")
+                    {
+                        await messageHelper.NotifyAsync(_interactedUser.FcmToken, "AmiSafe Alert", User.Name + " is Diagnosed +ve for COVID-19");
+                    }
+                }
+            }
+            await PopupNavigation.Instance.PopAsync();
+
         }
 
         private void PrepareQuestions()
@@ -87,37 +114,53 @@ namespace traccine.ViewModels
             {
                 if(question.Ques == "Are you Suffering with Fever ?")
                 {
-                    if (question.SelectItem.Text == "Yes")
+                    if(question.SelectItem!=null)
                     {
-                        IshavingFever = true;
+                        if (question.SelectItem.Text == "Yes")
+                        {
+                            IshavingFever = true;
+                        }
                     }
+                      
                 }else if (question.Ques == "Are you experiencing any symptoms like 'Dry Cough', 'Sore throat' , 'Weakness' and 'Difficulty in Breathing' ?")
-                {
-                    if (question.SelectItem.Text == "Yes")
+                { 
+                    if (question.SelectItem != null)
                     {
-                        IshavingSymptoms = true;
+                        if (question.SelectItem.Text == "Yes")
+                        {
+                            IshavingSymptoms = true;
+                        }
                     }
                 }
                 else if (question.Ques== "In the last 14 days, have you traveled internationally ?")
                 {
-                    if (question.SelectItem.Text == "Yes")
+                    if (question.SelectItem != null)
                     {
-                        IshavingTravelhistory = true;
+                        if (question.SelectItem.Text == "Yes")
+                        {
+                            IshavingTravelhistory = true;
 
+                        }
                     }
                 }
                 else if (question.Ques ==  "In the last 14 days, have you been in an area where COVID-19 is widespread?")
                 {
-                    if (question.SelectItem.Text == "Yes")
+                    if (question.SelectItem != null)
                     {
-                        IsVisitedtocoronaArea = true;
+                        if (question.SelectItem.Text == "Yes")
+                        {
+                            IsVisitedtocoronaArea = true;
+                        }
                     }
                 }
                 else if (question.Ques ==  "Do you live or work in a care facility?")
                 {
-                    if (question.SelectItem.Text == "Yes")
+                    if (question.SelectItem != null)
                     {
-                        IsheWorkingincarefacilty = true;
+                        if (question.SelectItem.Text == "Yes")
+                        {
+                            IsheWorkingincarefacilty = true;
+                        }
                     }
                 }
             }
@@ -151,7 +194,6 @@ namespace traccine.ViewModels
             if (ReportedSymptoms)
             {
                 Settings.User = JsonConvert.SerializeObject(User);
-                await firebaseHelper.Updateisinfected(User.Id, true);
                 var users = await App.Database.GetTotalInteractedEmails();
 
                 foreach (var user in users)
@@ -159,7 +201,7 @@ namespace traccine.ViewModels
                     var _interactedUser = await firebaseHelper.GetPerson(user);
                     if (_interactedUser.FcmToken != "")
                     {
-                        await messageHelper.NotifyAsync(_interactedUser.FcmToken, "AmiSafe detected a person with COVID-19 Symptoms ", User.Name + " is Reported COVID-19 Symptoms ");
+                        await messageHelper.NotifyAsync(_interactedUser.FcmToken, "AmiSafe Alert ", User.Name + " is Reported COVID-19 Symptoms ");
                     }
                 }
             }
