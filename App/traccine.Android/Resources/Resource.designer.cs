@@ -15,7 +15,7 @@ namespace traccine.Droid
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
 	public partial class Resource
 	{
 		
@@ -11487,19 +11487,22 @@ namespace traccine.Droid
 			public const int sneezing = 2131165354;
 			
 			// aapt resource value: 0x7F0700AB
-			public const int timeline = 2131165355;
+			public const int Sponsors = 2131165355;
 			
 			// aapt resource value: 0x7F0700AC
-			public const int tooltip_frame_dark = 2131165356;
+			public const int timeline = 2131165356;
 			
 			// aapt resource value: 0x7F0700AD
-			public const int tooltip_frame_light = 2131165357;
+			public const int tooltip_frame_dark = 2131165357;
 			
 			// aapt resource value: 0x7F0700AE
-			public const int twitter = 2131165358;
+			public const int tooltip_frame_light = 2131165358;
 			
 			// aapt resource value: 0x7F0700AF
-			public const int Walking = 2131165359;
+			public const int twitter = 2131165359;
+			
+			// aapt resource value: 0x7F0700B0
+			public const int Walking = 2131165360;
 			
 			static Drawable()
 			{

@@ -38,7 +38,7 @@
         <ShellContent Title="TimeLine"
                     Icon="timeline"
                     ContentTemplate="{DataTemplate local:Timeline}" />
-        <ShellContent Title="My Profle"
+        <ShellContent Title="Screen/Report"
                     Icon="profile"
                     ContentTemplate="{DataTemplate local:ProfilePage}" />
         <ShellContent Title="Sponsors"

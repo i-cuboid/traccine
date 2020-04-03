@@ -76,7 +76,7 @@ namespace traccine.ViewModels
             LoginCommand = new Command(LoginAsync);
             AppNmae = GlobalSettings.AppName;
             LogoutCommand = new Command(Logout);
-            OpenTermsCommand = new Command(GoToTerms);
+           
 
             IsTermsAndConditionsAccepted = false;
               _googleClientManager = CrossGoogleClient.Current;
@@ -87,10 +87,7 @@ namespace traccine.ViewModels
            
            
         }
-       public  void GoToTerms()
-        {            
-            PopupNavigation.Instance.PushAsync(new TermsAndConditions());
-        }
+      
         public async void LoginAsync()
         {
             var page = new SyncLoading("Loading...");

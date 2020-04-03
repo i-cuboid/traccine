@@ -135,7 +135,7 @@
                             </Label.FormattedText>
                         </Label>
                     </Grid>-->
-                    <Grid VerticalOptions="Center" >
+                    <!--<Grid VerticalOptions="Center" >
 
                         <Label
                          
@@ -159,7 +159,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                    </Grid>
+                    </Grid>-->
                     <Label
                          FontFamily="{StaticResource font_bold}" 
                         FontAttributes="None"                       

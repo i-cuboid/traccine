@@ -3,33 +3,185 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              mc:Ignorable="d"
              Title="Sponsors"
-             x:Class="traccine.Views.SponsorPage">
-    <ContentPage.Content>
-        <StackLayout Padding="30">
-            <StackLayout Orientation="Vertical" HeightRequest="200">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="iCuboidUrl"/>
-                </StackLayout.GestureRecognizers>
-                <Image Source="finalicuboidlogo1.png" Aspect="AspectFit" WidthRequest="300"/>
-                <!--<Label Text="iCuboid"/>-->
-            </StackLayout>
-            <StackLayout HeightRequest="200">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="CyclonerakeUlr"/>
-                </StackLayout.GestureRecognizers>
-                <Image Source="cyclonerake.png"  Aspect="AspectFit"  />
-                <!--<Label Text="Cyclonerake"/>-->
-            </StackLayout>
-            <StackLayout HeightRequest="200">
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="DyocenseUrl"/>
-                </StackLayout.GestureRecognizers>
-                <Image Source="dyocense.png"  Aspect="AspectFit"  Margin="0,0,0,0"/>
-                <!--<Label Text="Dyocense"/>-->
+             x:Class="traccine.Views.SponsorPage"
+             BackgroundColor="White">
+    <StackLayout>
 
-            </StackLayout>
+        <!-- Principal-->
+        <StackLayout   BackgroundColor="#791AE5" HeightRequest="190">
+            <!-- Main image-->
+            <Image Source="Sponsors" HorizontalOptions="Center" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" Margin="0,10,0,0"/>
+            <!-- Place name & travel date-->
+            <Label Margin="0,0,0,0" HorizontalTextAlignment="Center" FontFamily="{StaticResource font_extrabold}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Sponsors &#10;" FontAttributes="Bold" FontSize="Large" ForegroundColor="White" />
+
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Frame CornerRadius="35" Margin="0,0,0,-20"   BackgroundColor="#791AE5" HasShadow="False" HeightRequest="25" VerticalOptions="EndAndExpand"/>
         </StackLayout>
-    </ContentPage.Content>
+
+        <!-- Days-->
+        <ScrollView 
+                        VerticalOptions="Start" 
+                      
+                        Orientation ="Vertical"
+                    x:Name="StatusScrollView">
+
+
+            <StackLayout Padding="0" Spacing="0" Margin="3,0,3,0">
+                <Frame BackgroundColor="White" CornerRadius="5" Padding="10" Margin="10">
+                    <StackLayout Padding="2" Spacing="0">
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid>
+                             
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="3*"/>
+                                    <ColumnDefinition  Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <yummy:PancakeView 
+                                    Margin="0,0,0,0" 
+                                    CornerRadius="10" 
+                                    HeightRequest="100" 
+                                    HorizontalOptions="Center" 
+                                 
+                                    VerticalOptions="Center" 
+                                    WidthRequest="90">
+                                    <Image Aspect="AspectFit" Source="finalicuboidlogo1" />
+                                </yummy:PancakeView>
+                                <Label 
+                                Grid.Column="1" 
+                                Margin="10,0,0,0" 
+                                    FontFamily="{StaticResource font_regular}"
+                                FontSize="14" 
+                                LineBreakMode="WordWrap"                                    
+                                Text="iCuboid is a startup company which connects technology with businesses to drive digitalization outcomes. iCuboid Enterprise grade platforms doesn't just boast technical functions, but aims directly at the strategic goals for startups and enterprises." />
+                                                               
+                              
+                              
+
+                            </Grid>
+                        </Grid>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="iCuboidUrl"/>
+                        </StackLayout.GestureRecognizers>
+
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" CornerRadius="5" Padding="10" Margin="10">
+                    <StackLayout Padding="2" Spacing="0">
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid>
+                              
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="3*"/>
+                                    <ColumnDefinition  Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <yummy:PancakeView 
+                                    Margin="0,0,0,0" 
+                                    CornerRadius="10" 
+                                    HeightRequest="100" 
+                                    HorizontalOptions="Center" 
+                                 
+                                    VerticalOptions="Center" 
+                                    WidthRequest="90">
+                                    <Image Aspect="AspectFit" Source="cyclonerake" />
+                                </yummy:PancakeView>
+                                <Label 
+                                Grid.Column="1" 
+                                Margin="10,0,0,0" 
+                                      FontFamily="{StaticResource font_regular}"
+                                FontSize="14" 
+                                LineBreakMode="WordWrap" 
+                                Text="The Cyclone Rake is the premiere leaf and lawn vacuum in America. Hand built and relentlessly supported by an amazing Customer Service Team. It turns days of cleanup into hours of easy work." />
+
+
+
+
+                            </Grid>
+                        </Grid>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="CyclonerakeUlr"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="White" CornerRadius="5" Padding="10" Margin="10">
+                    <StackLayout Padding="2" Spacing="0">
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid>
+                               
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  Width="3*"/>
+                                    <ColumnDefinition  Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <yummy:PancakeView 
+                                    Margin="0,0,0,0" 
+                                    CornerRadius="10" 
+                                    HeightRequest="100" 
+                                    HorizontalOptions="Center" 
+                                 
+                                    VerticalOptions="Center" 
+                                    WidthRequest="90">
+                                    <Image Aspect="AspectFit" Source="dyocense" />
+                                </yummy:PancakeView>
+                                <Label 
+                                Grid.Column="1" 
+                                Margin="10,0,0,0" 
+                                FontSize="14" 
+                                LineBreakMode="WordWrap" 
+                                      FontFamily="{StaticResource font_regular}"
+                               
+                                Text="Dyocense software enables comprehensive data analytics and management, empowering businesses to create new solutions and revenue streams with data collected from any device, through any connectivity, throughout any IT ecosystem." />
+
+
+
+
+                            </Grid>
+                        </Grid>
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="DyocenseUrl"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <!--<StackLayout Padding="30">
+                <StackLayout Orientation="Vertical" HeightRequest="200">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="iCuboidUrl"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="finalicuboidlogo1.png" Aspect="AspectFit" WidthRequest="300"/>
+                    -->
+            <!--<Label Text="iCuboid"/>-->
+            <!--
+                </StackLayout>
+                <StackLayout HeightRequest="200">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="CyclonerakeUlr"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="cyclonerake.png"  Aspect="AspectFit"  />
+                    -->
+            <!--<Label Text="Cyclonerake"/>-->
+            <!--
+                </StackLayout>
+                <StackLayout HeightRequest="200">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="DyocenseUrl"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image Source="dyocense.png"  Aspect="AspectFit"  Margin="0,0,0,0"/>
+                    -->
+            <!--<Label Text="Dyocense"/>-->
+            <!--
+
+                </StackLayout>
+            </StackLayout>-->
+        </ScrollView>
+    </StackLayout>
+
 </ContentPage>
