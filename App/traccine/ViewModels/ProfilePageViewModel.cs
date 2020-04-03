@@ -60,7 +60,7 @@ namespace traccine.ViewModels
             await firebaseHelper.Updateisinfected(User.Id, User.IsInfected);
             if (User.IsInfected)
             {
-              
+               
                 Settings.User = JsonConvert.SerializeObject(User);
                 var users = await App.Database.GetTotalInteractedEmails();
 

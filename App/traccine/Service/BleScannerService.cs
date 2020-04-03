@@ -3,6 +3,7 @@ using Plugin.BLE;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.Exceptions;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,7 @@ namespace traccine.Service
                         var manufacturedata = device.AdvertisementRecords.Where(x => x.Type == AdvertisementRecordType.ManufacturerSpecificData).FirstOrDefault();
                         var manufactureinfo =Encoding.UTF8.GetString(manufacturedata.Data);
                         string my_String = Regex.Replace(manufactureinfo, @"[^0-9a-zA-Z]+", "");
-                        if (my_String == "Ami")
+                        if (my_String == "Ami" && CrossConnectivity.Current.IsConnected)
                         {
                       
                                 Thread.Sleep(100);
@@ -145,6 +146,10 @@ namespace traccine.Service
                                     var Interacteduserinfo= await App.Database.GetIntreactionInfo(person.Email);
                                     if (Interacteduserinfo != null)
                                     {
+                                        if (person.IsInfected)
+                                        {
+                                            MessagingCenter.Send<BleScannerService, string>(this, "OnInfectedDetected", "AmiSafe detected a Person with COVID-19 in " + distance.ToString("0.00") + " M" + " Range");
+                                        }
                                         Interacteduserinfo.DateTime = DateTime.Now;
                                         Interacteduserinfo.Distance = distance.ToString("0.00") + " M";
                                         Interacteduserinfo.Time = DateTime.UtcNow.ToLocalTime().ToString("h:mm tt");
@@ -164,7 +169,7 @@ namespace traccine.Service
                                         if (person.IsInfected)
                                         {
                                             TimeLine.TransportColor = "red";
-
+                                            MessagingCenter.Send<BleScannerService, string>(this, "OnInfectedDetected", "AmiSafe detected a Person with COVID-19 in"+ distance.ToString("0.00") + " M"+" Range");
                                         }
                                         else
                                         {

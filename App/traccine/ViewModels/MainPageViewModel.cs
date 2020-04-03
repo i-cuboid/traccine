@@ -124,7 +124,7 @@ namespace traccine.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert("Error", e.Message, "OK");
             }
-            PopupNavigation.Instance.PopAsync();
+           
         }
 
 

@@ -2,15 +2,20 @@
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.Exceptions;
+using Plugin.Connectivity;
 using Plugin.FirebasePushNotification;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using traccine.Helpers;
 using traccine.Models;
 using traccine.Service;
+using traccine.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -37,6 +42,7 @@ namespace traccine.ViewModels
         public FirbaseDataBaseHelper firebaseHelper { get; set; }
         public int Score { get; set; }
         public String Username { get; set; }
+        public bool NoInternet { get; set; }
         public string Message
         {
             get { return _Message; }
@@ -51,8 +57,9 @@ namespace traccine.ViewModels
         }
         public HomePageViewModel()
         {
-           
-            Message = "";
+            NoInternet = false;
+            ConnectionMonitor();
+             Message = "";
             Cases = 0;
             Interactions = 0;
             Score = 0;
@@ -69,7 +76,39 @@ namespace traccine.ViewModels
                 SetupFcm();
             }
         }
+       
+        public async void ConnectionMonitor()
+        {
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    if (!CrossConnectivity.Current.IsConnected)
+                    {
+                        if (!NoInternet)
+                        {
+                            NoInternet = true;
+                            var page1 = new SyncLoading("No Internet Connection");
+                            await PopupNavigation.Instance.PushAsync(page1);
+                        }
+                       
 
+                    }
+                    else
+                    {
+                        if (NoInternet)
+                        {
+                            await PopupNavigation.Instance.PopAsync();
+                            NoInternet = false;
+                        }
+                      //  return;
+                    }
+
+                    Thread.Sleep(1000); // milliseconds to a second
+
+                }
+            }); throw new NotImplementedException();
+        }
         private async void GoToInsightsPage(object obj)
         {
             await Shell.Current.GoToAsync("CoronaInsightsPage");
@@ -153,24 +192,27 @@ namespace traccine.ViewModels
             {
                 Message = "Good Night";
            }
-            using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://corona.lmao.ninja/all"))
+            if (CrossConnectivity.Current.IsConnected)
             {
-               
-               
-
-                using (var httpClient = new HttpClient())
+                using (var httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://corona.lmao.ninja/all"))
                 {
-                    var result = await httpClient.SendAsync(httpRequest);
 
-                    if (result.IsSuccessStatusCode)
+
+
+                    using (var httpClient = new HttpClient())
                     {
-                        var test = await result.Content.ReadAsStringAsync();
-                        Cases = JsonConvert.DeserializeObject<CoronaCases>(test).cases;
-                    }
-                    else
-                    {
-                        // Use result.StatusCode to handle failure
-                        // Your custom error handler here
+                        var result = await httpClient.SendAsync(httpRequest);
+
+                        if (result.IsSuccessStatusCode)
+                        {
+                            var test = await result.Content.ReadAsStringAsync();
+                            Cases = JsonConvert.DeserializeObject<CoronaCases>(test).cases;
+                        }
+                        else
+                        {
+                            // Use result.StatusCode to handle failure
+                            // Your custom error handler here
+                        }
                     }
                 }
             }
