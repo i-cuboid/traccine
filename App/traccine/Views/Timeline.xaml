@@ -8,9 +8,9 @@
              x:Class="traccine.Views.Timeline"
              Title="TimeLine">
     <ContentPage.Content>
-        <StackLayout>
-
-            <!-- Principal-->
+       
+        <StackLayout>           
+                <!-- Principal-->
             <StackLayout   BackgroundColor="#791AE5" HeightRequest="350">
                 <!-- Main image-->
                 <Image Source="dj" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,30,0,0"/>
@@ -40,7 +40,8 @@
 
             <!-- Schedule-->
             <StackLayout BackgroundColor="#f8f9fb" >
-                <CollectionView ItemsSource="{Binding TimeLine}"                               
+                <ScrollView>
+                    <CollectionView ItemsSource="{Binding TimeLine}"                               
                                VerticalOptions="Start">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -69,7 +70,19 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                </ScrollView>
+            </StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand" Style="{StaticResource footerStyle}">
+                <Label TextColor="White" HorizontalTextAlignment="Center" VerticalOptions="Center"  Margin="0,10,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span  FontFamily="{StaticResource font_bold}"  Text="Powered By " ></Span>
+                            <Span  FontFamily="{StaticResource font_bold}"  Text="{Binding PowerdBy} " ></Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </StackLayout>
         </StackLayout>
+       
     </ContentPage.Content>
 </ContentPage>

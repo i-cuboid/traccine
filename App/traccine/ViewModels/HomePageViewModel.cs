@@ -43,6 +43,7 @@ namespace traccine.ViewModels
         public int Score { get; set; }
         public String Username { get; set; }
         public bool NoInternet { get; set; }
+        public string PowerdBy { get; set; }
         public string Message
         {
             get { return _Message; }
@@ -57,6 +58,7 @@ namespace traccine.ViewModels
         }
         public HomePageViewModel()
         {
+            PowerdBy = GlobalSettings.PowerdBy;
             NoInternet = false;
             ConnectionMonitor();
              Message = "";
@@ -190,7 +192,7 @@ namespace traccine.ViewModels
            }
             else
             {
-                Message = "Good Night";
+                Message = "Good Evening";
            }
             if (CrossConnectivity.Current.IsConnected)
             {

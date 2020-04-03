@@ -13,9 +13,11 @@ namespace traccine.ViewModels
 {
      public class CoronaInsightsPageViewModel
     {
+        public string PowerdBy { get; set; }
         public ObservableCollection<CoronaDetails> CoronaDetails { get; set; }
         public CoronaInsightsPageViewModel()
         {
+            PowerdBy = GlobalSettings.PowerdBy;
             CoronaDetails = new ObservableCollection<CoronaDetails>();
             setup();
         }

@@ -35,7 +35,10 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
-      
+        <Style x:Key="footerStyle" TargetType="StackLayout">
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="HeightRequest" Value="40"/>
+        </Style>
         <Style x:Key="stlContactBtn" TargetType="Button">
                 <Setter Property="TranslationY"     Value="-50"/>
                 <Setter Property="TranslationX"     Value="45"/> 

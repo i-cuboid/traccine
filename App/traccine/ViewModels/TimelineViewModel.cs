@@ -14,13 +14,14 @@ namespace traccine.ViewModels
 {
     public class TimelineViewModel :INotifyPropertyChanged
     {
-      
+        public string PowerdBy { get; set; }
         public ObservableCollection<TimeLineModel> TimeLine { get; set; }
         public ICommand ViewCommand { get; set; }
         public string CurrentDate { get; set; }
         public int CurrentDay { get; set; }
         public TimelineViewModel()
         {
+            PowerdBy = GlobalSettings.PowerdBy;
             ViewCommand = new Command(ViewCommandasync);
             TimeLine = new ObservableCollection<TimeLineModel>();
             var dateNow = DateTime.Now;
