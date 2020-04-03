@@ -46,9 +46,10 @@
                                                 TextColor="{Binding BackgroundColor}" 
                                                 FontSize="16" 
                                                 BorderColor="{Binding BackgroundColor}" 
-                                                BorderWidth="2" HeightRequest="50" 
-                                                Text="Login"
-                                                 Clicked="OnButtonClicked" 
+                                                BorderWidth="2" 
+                                                HeightRequest="50" 
+                                                Text="Next"
+                                                Clicked="OnButtonClicked"
                                                 HorizontalOptions="Center" />
                                         <Label  FontFamily="{StaticResource font_regular}" Margin="0,8,0,0" TextColor="Gray" Text="{Binding Type}" FontSize="10" HorizontalOptions="Center" />
                                     </StackLayout>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="traccine.TermsAndConditions">
+    <ContentPage.Content>
+        <Frame CornerRadius="10" Margin="10,50,10,10" Padding="10" BackgroundColor="White">
+            <StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand">
+                    <Label Text="{Binding AppNmae}" HorizontalOptions="Center" FontSize="30" FontAttributes="Bold" FontFamily="{Binding font_extrabold}"/>
+                    <Image  Opacity="0.7" Source="icon.png" HeightRequest="90" Margin="24,24,24,0" />
+                    <Label Text="Terms And Conditions" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                </StackLayout>
+                <StackLayout VerticalOptions="Center" Margin="20,0,20,0">
+                    <ScrollView>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="BlueTooth" FontSize="20" TextColor="black" FontAttributes="Bold" FontFamily="{Binding font_extrabold}"></Label>
+                            <Label Text="Monitors your divice's proximity to another mobile devise. it is recommended that you keep it on at all time."/>
+                            <Label Text="Data Sharing" FontSize="20" TextColor="black" FontAttributes="Bold" FontFamily="{Binding font_extrabold}"></Label>
+                            <Label Text="The App does not allow your details to be disclosed to the public at large at any time"/>
+                            <Label Text="If you would like to contribute to safe world please indicate your acceptance of the Terms and Conditions by clicking on the button below"/>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+                <StackLayout VerticalOptions="EndAndExpand" >
+                    <!--<StackLayout Orientation="Horizontal">
+                        <CheckBox  IsChecked="{Binding IsTermsAndConditionsAccepted}"  HeightRequest="35"   Color="BlueViolet"/>
+                        <Label Text="I have read and agree to the Terms and Conditions" VerticalTextAlignment="Center" FontSize="20"/>
+                    </StackLayout>-->
+                    <Label
+                        Margin="0,0,0,10"
+                         FontFamily="{StaticResource font_bold}" 
+                        FontAttributes="None"                       
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        TextColor="#99A1B3"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand" >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span  FontFamily="{StaticResource font_bold}"  Text="Powered By " ></Span>
+                                <Span  FontFamily="{StaticResource font_bold}"  Text="{Binding PowerdBy} " ></Span>
+                                <Span FontSize="Micro" Text="&#10; Wehelp@icuboid.com " ></Span>
+                                <Span  FontSize="Micro" Text="&#10; www.icuboid.com " ></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button Text="I Agree" Clicked="OnButtonClicked"
+                        ContentLayout="Right,0"                          
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="black"
+                        TextColor="white"
+                        />
+
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

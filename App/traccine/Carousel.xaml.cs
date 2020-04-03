@@ -96,15 +96,9 @@ namespace traccine
 
         private async void OnButtonClicked(object sender, EventArgs e)
         {
-            try
-            {
-                Application.Current.MainPage = new MainPage();               
 
-            }
-            catch (Exception ex)
-            {
+        Application.Current.MainPage = new TermsAndConditions();
 
-            }
         }
     }
 }
