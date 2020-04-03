@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Connectivity;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,10 @@ namespace traccine.ViewModels
 
         private async void setup()
         {
+            if (CrossConnectivity.Current.IsConnected)
+            {
+
+         
             var page1 = new SyncLoading("Loading...");
             await PopupNavigation.Instance.PushAsync(page1);
 
@@ -53,6 +58,7 @@ namespace traccine.ViewModels
                 }
             }
             await PopupNavigation.Instance.PopAsync();
+            }
         }
     }
 }
