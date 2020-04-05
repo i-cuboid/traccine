@@ -17,7 +17,7 @@
                     <ScrollView>
                         <StackLayout Orientation="Vertical">
                             <Label Text="Bluetooth" FontSize="20" TextColor="black" FontAttributes="Bold" FontFamily="{Binding font_extrabold}"></Label>
-                            <Label Text="Monitors your divice's proximity to another mobile devise. it is recommended that you keep it on at all time."/>
+                            <Label Text="Monitors your divice's proximity to another mobile device. it is recommended that you keep it on at all time."/>
                             <Label Text="Data Sharing" FontSize="20" TextColor="black" FontAttributes="Bold" FontFamily="{Binding font_extrabold}"></Label>
                             <Label Text="The App does not allow your details to be disclosed to the public at large at any time"/>
                             <Label Text="If you would like to contribute to safe world please indicate your acceptance of the Terms and Conditions by clicking on the button below"/>
